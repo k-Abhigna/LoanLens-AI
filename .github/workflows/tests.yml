@@ -3,10 +3,22 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    env:
+      LLM_PROVIDER: extractive  # CI never calls a paid or rate-limited LLM
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: ${{ matrix.python-version }}
+          cache: pip
       - run: pip install -r requirements.txt && pip install -e .
       - run: pytest -q
+      - name: Build demo applications
+        run: |
+          python scripts/make_demo_data.py
+          python -m loanlens.generate.build_dataset --input data/demo/demo_borrowers.csv --limit 40
+      - name: Q&A quality gate (retrieval, answers, guardrails, no cross-applicant leakage)
+        run: python evals/run_rag_eval.py --limit 40 --tag ci --min-hit 0.95 --min-acc 0.9 --min-refusal 0.95

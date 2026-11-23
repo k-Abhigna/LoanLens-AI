@@ -23,6 +23,7 @@ and income fraud slips through.
 | Cross-check documents against each other | Deterministic rules |
 | Compute verified income, DTI, loan-to-income | Deterministic rules |
 | Recommend APPROVE / REVIEW / REJECT with reasons | Policy rules |
+| Answer the officer's questions about the file, with citations | Retrieval (RAG) + LLM, with input/output guardrails |
 | Final decision | **Human loan officer** |
 
 AI is used only where the input is unstructured (reading documents). Everything that decides

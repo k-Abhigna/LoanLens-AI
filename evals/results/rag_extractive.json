@@ -1,0 +1,195 @@
+{
+  "provider": "extractive",
+  "extractor": "rules",
+  "applications": 40,
+  "questions": 1080,
+  "k": 4,
+  "hit_at_k": 1.0,
+  "mrr": 0.989,
+  "answer_accuracy": 0.961,
+  "answer_accuracy_by_source": {
+    "application": 0.963,
+    "bank_statement": 1.0,
+    "payslip": 0.863,
+    "policy": 1.0,
+    "underwriting": 1.0
+  },
+  "refusal_accuracy": 1.0,
+  "guardrail_block_rate": 1.0,
+  "cross_application_leakage": 0,
+  "passages_retrieved": 1729,
+  "avg_answer_ms": 4.3,
+  "index_build_seconds": 10.8,
+  "failures": [
+    {
+      "application_id": "DEMO0001",
+      "category": "answerable",
+      "question": "What is the net pay on the payslip?",
+      "expected_doc_type": "payslip",
+      "expected": [
+        "6,664.44"
+      ],
+      "answer": "AI recommendation for this application: REVIEW (risk score 80 out of 100, confidence low). Reasons why: Income could not be verified; name_match: Application / payslip / bank: Maria Diaz / None / None"
+    },
+    {
+      "application_id": "DEMO0001",
+      "category": "answerable",
+      "question": "What gross pay does the payslip show?",
+      "expected_doc_type": "payslip",
+      "expected": [
+        "9,208.33"
+      ],
+      "answer": "AI recommendation for this application: REVIEW (risk score 80 out of 100, confidence low). Reasons why: Income could not be verified; name_match: Application / payslip / bank: Maria Diaz / None / None"
+    },
+    {
+      "application_id": "DEMO0002",
+      "category": "answerable",
+      "question": "How much money does the applicant want to borrow?",
+      "expected_doc_type": "application",
+      "expected": [
+        "18,250.00"
+      ],
+      "answer": "Loan application applicant name: Brian Perry (extracted from application.pdf by the rules extractor, read with pdf text) [1]"
+    },
+    {
+      "application_id": "DEMO0004",
+      "category": "answerable",
+      "question": "How much money does the applicant want to borrow?",
+      "expected_doc_type": "application",
+      "expected": [
+        "26,750.00"
+      ],
+      "answer": "Loan application applicant name: Kevin Wells (extracted from application.pdf by the rules extractor, read with pdf text) [1]"
+    },
+    {
+      "application_id": "DEMO0011",
+      "category": "answerable",
+      "question": "How much money does the applicant want to borrow?",
+      "expected_doc_type": "application",
+      "expected": [
+        "23,250.00"
+      ],
+      "answer": "Loan application applicant name: Steven Sanders (extracted from application.pdf by the rules extractor, read with pdf text) [1]"
+    },
+    {
+      "application_id": "DEMO0014",
+      "category": "answerable",
+      "question": "How much money does the applicant want to borrow?",
+      "expected_doc_type": "application",
+      "expected": [
+        "34,000.00"
+      ],
+      "answer": "Loan application applicant name: Maria Nguyen (extracted from application.pdf by the rules extractor, read with pdf text) [1]"
+    },
+    {
+      "application_id": "DEMO0019",
+      "category": "answerable",
+      "question": "What is the net pay on the payslip?",
+      "expected_doc_type": "payslip",
+      "expected": [
+        "4,738.62"
+      ],
+      "answer": "AI recommendation for this application: REVIEW (risk score 80 out of 100, confidence low). Reasons why: Income could not be verified; name_match: Application / payslip / bank: Linda Brooks / None / No"
+    },
+    {
+      "application_id": "DEMO0019",
+      "category": "answerable",
+      "question": "What gross pay does the payslip show?",
+      "expected_doc_type": "payslip",
+      "expected": [
+        "6,583.33"
+      ],
+      "answer": "Payslip employer: PAY SLIP (extracted from payslip.pdf by the rules extractor, read with pdf text) [2]"
+    },
+    {
+      "application_id": "DEMO0026",
+      "category": "answerable",
+      "question": "What is the net pay on the payslip?",
+      "expected_doc_type": "payslip",
+      "expected": [
+        "8,448.54"
+      ],
+      "answer": "AI recommendation for this application: REVIEW (risk score 80 out of 100, confidence low). Reasons why: Income could not be verified; name_match: Application / payslip / bank: Daniel Price / None / No"
+    },
+    {
+      "application_id": "DEMO0026",
+      "category": "answerable",
+      "question": "What gross pay does the payslip show?",
+      "expected_doc_type": "payslip",
+      "expected": [
+        "11,875.00"
+      ],
+      "answer": "Payslip employer: PAY SLIP (extracted from payslip.pdf by the rules extractor, read with pdf text) [2]"
+    },
+    {
+      "application_id": "DEMO0032",
+      "category": "answerable",
+      "question": "What is the net pay on the payslip?",
+      "expected_doc_type": "payslip",
+      "expected": [
+        "1,848.87"
+      ],
+      "answer": "Payslip employer: PAY SLIP (extracted from payslip_scan.jpg by the rules extractor, read with ocr) [3]"
+    },
+    {
+      "application_id": "DEMO0032",
+      "category": "answerable",
+      "question": "What gross pay does the payslip show?",
+      "expected_doc_type": "payslip",
+      "expected": [
+        "2,541.67"
+      ],
+      "answer": "Gross Earnings [4] Payslip employer: PAY SLIP (extracted from payslip_scan.jpg by the rules extractor, read with ocr) [3]"
+    },
+    {
+      "application_id": "DEMO0033",
+      "category": "answerable",
+      "question": "How much money does the applicant want to borrow?",
+      "expected_doc_type": "application",
+      "expected": [
+        "22,750.00"
+      ],
+      "answer": "Loan application applicant name: Steven Bennett (extracted from application.pdf by the rules extractor, read with pdf text) [1]"
+    },
+    {
+      "application_id": "DEMO0037",
+      "category": "answerable",
+      "question": "What is the net pay on the payslip?",
+      "expected_doc_type": "payslip",
+      "expected": [
+        "4,414.40"
+      ],
+      "answer": "AI recommendation for this application: REVIEW (risk score 80 out of 100, confidence low). Reasons why: Income could not be verified; name_match: Application / payslip / bank: Michelle Diaz / None / N"
+    },
+    {
+      "application_id": "DEMO0037",
+      "category": "answerable",
+      "question": "What gross pay does the payslip show?",
+      "expected_doc_type": "payslip",
+      "expected": [
+        "5,666.67"
+      ],
+      "answer": "Payslip employer: PAY SLIP (extracted from payslip.pdf by the rules extractor, read with pdf text) [3]"
+    },
+    {
+      "application_id": "DEMO0038",
+      "category": "answerable",
+      "question": "How much money does the applicant want to borrow?",
+      "expected_doc_type": "application",
+      "expected": [
+        "27,250.00"
+      ],
+      "answer": "Loan application applicant name: James Carter (extracted from application.pdf by the rules extractor, read with pdf text) [1]"
+    },
+    {
+      "application_id": "DEMO0038",
+      "category": "answerable",
+      "question": "What is the net pay on the payslip?",
+      "expected_doc_type": "payslip",
+      "expected": [
+        "7,273.46"
+      ],
+      "answer": "Payslip employer: PAY SLIP (extracted from payslip_scan.jpg by the rules extractor, read with ocr) [3]"
+    }
+  ]
+}

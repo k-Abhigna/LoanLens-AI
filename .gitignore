@@ -10,3 +10,6 @@ data/processed/
 data/generated/
 data/audit_log.jsonl
 evals/results/*_demo.*
+data/rag_index.joblib
+evals/results/*_dev.*
+evals/results/*_ci.*

@@ -41,7 +41,7 @@ Document text:
 """
 
 
-def _call_gemini(prompt: str) -> str:
+def _call_gemini(prompt: str, json_mode: bool = True) -> str:
     key = os.getenv("GEMINI_API_KEY")
     if not key:
         raise RuntimeError("GEMINI_API_KEY is not set (add it to .env, or to Streamlit Cloud secrets)")
@@ -49,7 +49,8 @@ def _call_gemini(prompt: str) -> str:
     url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
     body = {
         "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {"responseMimeType": "application/json", "temperature": 0},
+        "generationConfig": {"responseMimeType": "application/json" if json_mode else "text/plain",
+                             "temperature": 0},
     }
     timeout = float(os.getenv("GEMINI_TIMEOUT", "180"))
     # Free tier: busy servers (timeouts, 429, 5xx) are common, so back off and retry

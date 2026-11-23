@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "loanlens"
-version = "0.1.0"
-description = "Document intelligence for retail loan underwriting"
+version = "0.2.0"
+description = "Document intelligence for retail loan underwriting, with cited Q&A over each application file"
 requires-python = ">=3.10"
 
 [tool.setuptools.packages.find]

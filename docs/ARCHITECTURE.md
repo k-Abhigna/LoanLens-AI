@@ -22,10 +22,25 @@ flowchart LR
         V --> DE[Policy engine<br/>APPROVE / REVIEW / REJECT]
     end
 
+    subgraph QA["Ask the file (per question)"]
+        Q[Officer question] --> IG{Input guardrail}
+        IG -- allowed --> RT[Retrieve top-k<br/>filtered to application_id]
+        IX[(TF-IDF index<br/>document text + facts + policy)] --> RT
+        RT --> AN[Answer<br/>Gemini / Claude / extractive]
+        AN --> OG{Output guardrail<br/>citations + numbers grounded}
+    end
+
     G --> D
-    DE --> UI[Streamlit review UI]
+    DE --> UI[Streamlit review UI / FastAPI]
     UI --> A[(Audit log<br/>AI + human decisions)]
     DE --> EV[evals/run_eval.py]
+    P --> IX
+    O --> IX
+    L --> IX
+    R --> IX
+    DE --> IX
+    OG --> UI
+    IX --> EV2[evals/run_rag_eval.py]
 ```
 
 ## Modules
@@ -43,6 +58,12 @@ flowchart LR
 | `decide.py` | Credit policy → decision, reasons, risk score, confidence |
 | `audit.py` | Append-only log of AI recommendations and officer decisions |
 | `pipeline.py` | Ties it all together; CLI |
+| `rag/chunking.py` | Document text → line-safe chunks; extracted fields, checks and decision → fact chunks; credit policy → policy chunks. All tagged with `application_id`, `doc_type`, `kind` |
+| `rag/index.py` | TF-IDF (word + char n-grams) index with metadata filtering, glossary query expansion and IDF weights |
+| `rag/guardrails.py` | Input rules (injection, decision requests, sensitive data, length) and output rules (valid citations, grounded numbers) |
+| `rag/llm.py` | Answer providers: Gemini, Claude, offline extractive; falls back to extractive on any failure |
+| `rag/assistant.py` | `LoanKnowledgeBase`: ingest an application, two-lane retrieval, ask with guardrails |
+| `api.py` | FastAPI: upload documents → decision; ask questions about an application |
 
 ## Key design decisions
 
@@ -55,5 +76,14 @@ flowchart LR
    is harder. When the payslip disagrees with deposits, income is re-estimated from deposits.
 4. **Evaluate on unseen layouts.** Regex rules score near 100% on the layout they were written
    for and fail on a new one. Layout B measures how each extractor generalises.
-5. **Balanced outcomes.** The sample is 50% repaid / 50% defaulted, so "approve everyone" can't
+5. **Retrieval never crosses applicants.** Many applications share one index, but every
+   chunk carries its `application_id` and every search is filtered to one application plus the
+   shared credit policy. The Q&A evaluation counts leaked passages and CI fails on any.
+6. **Two retrieval lanes.** Extracted facts are precise but can be wrong or missing (unseen
+   layout, OCR); raw document text is noisy but complete. Half the top-k comes from each, and
+   facts that say a value was "not found" are down-weighted, so the raw text can still answer.
+7. **Grounded answers or none.** Every LLM answer must cite a real passage and every number in
+   it must appear in the cited passages; otherwise it is replaced by an extractive answer made
+   only of passage text. Unanswerable questions get "not found".
+8. **Balanced outcomes.** The sample is 50% repaid / 50% defaulted, so "approve everyone" can't
    look good.

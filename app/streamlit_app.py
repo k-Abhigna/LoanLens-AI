@@ -21,6 +21,8 @@ from loanlens.evidence import highlight  # noqa: E402
 from loanlens.generate import demo  # noqa: E402
 from loanlens.generate.build_dataset import build  # noqa: E402
 from loanlens.pipeline import document_files, process_documents  # noqa: E402
+from loanlens.rag import LoanKnowledgeBase  # noqa: E402
+from loanlens.rag.assistant import DOC_TYPES  # noqa: E402
 
 st.set_page_config(page_title="LoanLens", page_icon="🏦", layout="wide")
 AUTHOR = "Abhigna Komaravolu"
@@ -93,6 +95,12 @@ def run_underwriting(files: list[Path]) -> dict:
         result = process_documents(files, "rules")
         result["fallback_reason"] = f"{type(err).__name__}: {err}"[:200]
         return result
+
+
+@st.cache_resource
+def knowledge_base() -> LoanKnowledgeBase:
+    """One shared Q&A index; every question is filtered to a single application."""
+    return LoanKnowledgeBase()
 
 
 @st.cache_data(show_spinner=False)
@@ -288,6 +296,56 @@ def evidence_view(result: dict, files: list[Path]) -> None:
                 f'{esc(doc["read_with"])}</div>{"".join(rows)}</div>', unsafe_allow_html=True)
 
 
+EXAMPLE_QUESTIONS = [
+    "Why did the AI recommend this decision?",
+    "What is the net pay on the payslip?",
+    "Who pays the salary deposits in the bank statement?",
+    "What is the debt-to-income ratio after the loan?",
+    "Above what debt-to-income ratio is an application rejected?",
+]
+SOURCE_LABELS = {"application": "Application", "payslip": "Payslip",
+                 "bank_statement": "Bank statement", "underwriting": "Underwriting result",
+                 "policy": "Credit policy"}
+
+
+def ask_view(result: dict, files: list[Path], app_id: str) -> None:
+    st.caption("Ask about this applicant's documents, the underwriting result or the credit "
+               "policy. Answers come only from this application's file and cite their sources; "
+               "the assistant cannot approve or reject.")
+    kb = knowledge_base()
+    if app_id not in kb.applications():  # e.g. the server restarted since underwriting
+        kb.ingest_application(app_id, files, result)
+    key = f"qa_{app_id}"
+    cols = st.columns(len(EXAMPLE_QUESTIONS))
+    for col, q in zip(cols, EXAMPLE_QUESTIONS):
+        if col.button(q, key=f"{key}_{q}", width="stretch"):
+            st.session_state[f"{key}_q"] = q
+    with st.form(f"{key}_form"):
+        question = st.text_input("Your question", key=f"{key}_q",
+                                 placeholder="e.g. What employer is on the payslip?")
+        doc_types = st.multiselect("Only search in (optional)", DOC_TYPES,
+                                   format_func=SOURCE_LABELS.get)
+        submitted = st.form_submit_button("Ask", type="primary")
+    if not (submitted or question):
+        return
+    with st.spinner("Searching the file..."):
+        r = kb.ask(question, application_id=app_id, doc_types=doc_types or None)
+    color = "#f59e0b" if r["blocked"] else ACCENT if r.get("found") else "#94a3b8"
+    label = "Blocked by guardrail" if r["blocked"] else "Answer"
+    st.markdown(f'<div class="ll-card" style="border-color:{color}55"><div class="ll-label">'
+                f'{label}</div><div style="font-size:1.05rem;margin-top:0.3rem">'
+                f'{esc(r["answer"])}</div></div>', unsafe_allow_html=True)
+    meta = f"Answered by {r['provider']} · {r['latency_ms']} ms"
+    if r["output_flags"]:
+        meta += f" · output guardrail: {', '.join(r['output_flags'])}"
+    st.caption(meta)
+    for s in r["sources"]:
+        where = SOURCE_LABELS.get(s["doc_type"], s["doc_type"])
+        with st.expander(f"[{s['n']}] {where} · {s['source']} · {s['kind']} · "
+                         f"score {s['score']}"):
+            st.text(s["text"])
+
+
 def officer_form(result: dict, app_id: str) -> None:
     d = result["decision"]
     st.subheader("Officer decision")
@@ -312,14 +370,16 @@ def show_result(result: dict, files: list[Path], app_id: str, truth: dict | None
     step_tracker(result)
     decision_hero(result)
     st.write("")
-    tab_checks, tab_fraud, tab_evidence = st.tabs(
-        ["🔍 Cross-document checks", "📊 Fraud forensics", "📄 Evidence"])
+    tab_checks, tab_fraud, tab_evidence, tab_ask = st.tabs(
+        ["🔍 Cross-document checks", "📊 Fraud forensics", "📄 Evidence", "💬 Ask the file"])
     with tab_checks:
         checks_view(result)
     with tab_fraud:
         forensics_view(result)
     with tab_evidence:
         evidence_view(result, files)
+    with tab_ask:
+        ask_view(result, files, app_id)
     if truth:
         with st.expander("Answer key (generated data only)"):
             st.write(f"Injected fraud: **{truth['labels']['fraud_type'] or 'none'}** · "
@@ -362,7 +422,9 @@ with tab_review:
     if files and st.button("Run underwriting", type="primary"):
         with st.spinner("Reading documents with Gemini (about 10–20 seconds)..."):
             try:
-                st.session_state["result"] = (app_id, run_underwriting(files))
+                result = run_underwriting(files)
+                knowledge_base().ingest_application(app_id, files, result)
+                st.session_state["result"] = (app_id, result)
             except Exception as err:
                 st.error(f"{type(err).__name__}: {err}")
     if "result" in st.session_state and st.session_state["result"][0] == app_id:
