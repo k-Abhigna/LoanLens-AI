@@ -1,0 +1,92 @@
+{
+  "receipt_id": "LR-012",
+  "lender": "Coastal Credit Co-operative",
+  "layout": "C",
+  "loan_id": "CCC/2024/170674",
+  "loan_type": "Business Loan",
+  "borrower_name": "Diya Desai",
+  "branch": "Kochi",
+  "principal_amount": 915000.0,
+  "interest_rate": 13.75,
+  "tenure_months": 24,
+  "emi_amount": 43823.8,
+  "disbursement_date": "2024-06-26",
+  "statement_date": "2024-10-29",
+  "installments_paid": 4,
+  "total_paid": 175295.2,
+  "principal_repaid": 135667.34,
+  "interest_paid": 39627.86,
+  "late_fees": 2629.44,
+  "late_payments": 3,
+  "outstanding_principal": 779332.66,
+  "next_due_date": "2024-11-26",
+  "schedule": [
+    {
+      "installment_no": 1,
+      "due_date": "2024-07-26",
+      "emi_amount": 43823.8,
+      "principal_component": 33339.42,
+      "interest_component": 10484.38,
+      "outstanding_balance": 881660.58,
+      "paid_date": "2024-07-31",
+      "late_fee": 876.48,
+      "status": "Paid Late"
+    },
+    {
+      "installment_no": 2,
+      "due_date": "2024-08-26",
+      "emi_amount": 43823.8,
+      "principal_component": 33721.44,
+      "interest_component": 10102.36,
+      "outstanding_balance": 847939.14,
+      "paid_date": "2024-08-31",
+      "late_fee": 876.48,
+      "status": "Paid Late"
+    },
+    {
+      "installment_no": 3,
+      "due_date": "2024-09-26",
+      "emi_amount": 43823.8,
+      "principal_component": 34107.83,
+      "interest_component": 9715.97,
+      "outstanding_balance": 813831.31,
+      "paid_date": "2024-10-01",
+      "late_fee": 876.48,
+      "status": "Paid Late"
+    },
+    {
+      "installment_no": 4,
+      "due_date": "2024-10-26",
+      "emi_amount": 43823.8,
+      "principal_component": 34498.65,
+      "interest_component": 9325.15,
+      "outstanding_balance": 779332.66,
+      "paid_date": "2024-10-26",
+      "late_fee": 0.0,
+      "status": "Paid"
+    },
+    {
+      "installment_no": 5,
+      "due_date": "2024-11-26",
+      "emi_amount": 43823.8,
+      "principal_component": 34893.95,
+      "interest_component": 8929.85,
+      "outstanding_balance": 744438.71,
+      "paid_date": null,
+      "late_fee": 0.0,
+      "status": "Due"
+    },
+    {
+      "installment_no": 6,
+      "due_date": "2024-12-26",
+      "emi_amount": 43823.8,
+      "principal_component": 35293.77,
+      "interest_component": 8530.03,
+      "outstanding_balance": 709144.94,
+      "paid_date": null,
+      "late_fee": 0.0,
+      "status": "Due"
+    }
+  ],
+  "file": "LR-012.pdf"
+}

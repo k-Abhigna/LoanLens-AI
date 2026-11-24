@@ -1,0 +1,92 @@
+{
+  "receipt_id": "LR-014",
+  "lender": "Meridian Bank",
+  "layout": "B",
+  "loan_id": "MRB/2025/163556",
+  "loan_type": "Two-Wheeler Loan",
+  "borrower_name": "Siddharth Verma",
+  "branch": "Kochi",
+  "principal_amount": 150000.0,
+  "interest_rate": 12.25,
+  "tenure_months": 24,
+  "emi_amount": 7078.55,
+  "disbursement_date": "2025-01-12",
+  "statement_date": "2025-05-15",
+  "installments_paid": 4,
+  "total_paid": 28314.2,
+  "principal_repaid": 22531.3,
+  "interest_paid": 5782.9,
+  "late_fees": 0.0,
+  "late_payments": 0,
+  "outstanding_principal": 127468.7,
+  "next_due_date": "2025-06-12",
+  "schedule": [
+    {
+      "installment_no": 1,
+      "due_date": "2025-02-12",
+      "emi_amount": 7078.55,
+      "principal_component": 5547.3,
+      "interest_component": 1531.25,
+      "outstanding_balance": 144452.7,
+      "paid_date": "2025-02-10",
+      "late_fee": 0.0,
+      "status": "Paid"
+    },
+    {
+      "installment_no": 2,
+      "due_date": "2025-03-12",
+      "emi_amount": 7078.55,
+      "principal_component": 5603.93,
+      "interest_component": 1474.62,
+      "outstanding_balance": 138848.77,
+      "paid_date": "2025-03-10",
+      "late_fee": 0.0,
+      "status": "Paid"
+    },
+    {
+      "installment_no": 3,
+      "due_date": "2025-04-12",
+      "emi_amount": 7078.55,
+      "principal_component": 5661.14,
+      "interest_component": 1417.41,
+      "outstanding_balance": 133187.63,
+      "paid_date": "2025-04-10",
+      "late_fee": 0.0,
+      "status": "Paid"
+    },
+    {
+      "installment_no": 4,
+      "due_date": "2025-05-12",
+      "emi_amount": 7078.55,
+      "principal_component": 5718.93,
+      "interest_component": 1359.62,
+      "outstanding_balance": 127468.7,
+      "paid_date": "2025-05-12",
+      "late_fee": 0.0,
+      "status": "Paid"
+    },
+    {
+      "installment_no": 5,
+      "due_date": "2025-06-12",
+      "emi_amount": 7078.55,
+      "principal_component": 5777.31,
+      "interest_component": 1301.24,
+      "outstanding_balance": 121691.39,
+      "paid_date": null,
+      "late_fee": 0.0,
+      "status": "Due"
+    },
+    {
+      "installment_no": 6,
+      "due_date": "2025-07-12",
+      "emi_amount": 7078.55,
+      "principal_component": 5836.28,
+      "interest_component": 1242.27,
+      "outstanding_balance": 115855.11,
+      "paid_date": null,
+      "late_fee": 0.0,
+      "status": "Due"
+    }
+  ],
+  "file": "LR-014.pdf"
+}

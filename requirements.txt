@@ -13,6 +13,8 @@ scikit-learn>=1.5
 numpy>=1.26
 joblib>=1.4
 anthropic>=1.0
+# Loan receipt parsing
+reductoai>=0.27
 # REST API
 fastapi>=0.115
 uvicorn>=0.30

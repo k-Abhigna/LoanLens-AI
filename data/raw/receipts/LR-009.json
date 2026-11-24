@@ -1,0 +1,92 @@
+{
+  "receipt_id": "LR-009",
+  "lender": "Coastal Credit Co-operative",
+  "layout": "C",
+  "loan_id": "CCC/2024/612340",
+  "loan_type": "Gold Loan",
+  "borrower_name": "Aarav Reddy",
+  "branch": "Kochi",
+  "principal_amount": 190000.0,
+  "interest_rate": 13.75,
+  "tenure_months": 6,
+  "emi_amount": 32948.69,
+  "disbursement_date": "2024-09-20",
+  "statement_date": "2025-02-22",
+  "installments_paid": 5,
+  "total_paid": 164743.45,
+  "principal_repaid": 157424.59,
+  "interest_paid": 7318.86,
+  "late_fees": 1976.91,
+  "late_payments": 3,
+  "outstanding_principal": 32575.41,
+  "next_due_date": "2025-03-20",
+  "schedule": [
+    {
+      "installment_no": 1,
+      "due_date": "2024-10-20",
+      "emi_amount": 32948.69,
+      "principal_component": 30771.61,
+      "interest_component": 2177.08,
+      "outstanding_balance": 159228.39,
+      "paid_date": "2024-11-03",
+      "late_fee": 658.97,
+      "status": "Paid Late"
+    },
+    {
+      "installment_no": 2,
+      "due_date": "2024-11-20",
+      "emi_amount": 32948.69,
+      "principal_component": 31124.2,
+      "interest_component": 1824.49,
+      "outstanding_balance": 128104.19,
+      "paid_date": "2024-11-29",
+      "late_fee": 658.97,
+      "status": "Paid Late"
+    },
+    {
+      "installment_no": 3,
+      "due_date": "2024-12-20",
+      "emi_amount": 32948.69,
+      "principal_component": 31480.83,
+      "interest_component": 1467.86,
+      "outstanding_balance": 96623.36,
+      "paid_date": "2024-12-25",
+      "late_fee": 658.97,
+      "status": "Paid Late"
+    },
+    {
+      "installment_no": 4,
+      "due_date": "2025-01-20",
+      "emi_amount": 32948.69,
+      "principal_component": 31841.55,
+      "interest_component": 1107.14,
+      "outstanding_balance": 64781.81,
+      "paid_date": "2025-01-18",
+      "late_fee": 0.0,
+      "status": "Paid"
+    },
+    {
+      "installment_no": 5,
+      "due_date": "2025-02-20",
+      "emi_amount": 32948.69,
+      "principal_component": 32206.4,
+      "interest_component": 742.29,
+      "outstanding_balance": 32575.41,
+      "paid_date": "2025-02-19",
+      "late_fee": 0.0,
+      "status": "Paid"
+    },
+    {
+      "installment_no": 6,
+      "due_date": "2025-03-20",
+      "emi_amount": 32948.67,
+      "principal_component": 32575.41,
+      "interest_component": 373.26,
+      "outstanding_balance": 0.0,
+      "paid_date": null,
+      "late_fee": 0.0,
+      "status": "Due"
+    }
+  ],
+  "file": "LR-009.pdf"
+}

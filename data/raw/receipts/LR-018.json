@@ -1,0 +1,92 @@
+{
+  "receipt_id": "LR-018",
+  "lender": "Coastal Credit Co-operative",
+  "layout": "C",
+  "loan_id": "CCC/2024/723939",
+  "loan_type": "Gold Loan",
+  "borrower_name": "Rohan Bose",
+  "branch": "Pune",
+  "principal_amount": 345000.0,
+  "interest_rate": 13.5,
+  "tenure_months": 24,
+  "emi_amount": 16483.07,
+  "disbursement_date": "2024-03-25",
+  "statement_date": "2024-07-28",
+  "installments_paid": 4,
+  "total_paid": 65932.28,
+  "principal_repaid": 51264.3,
+  "interest_paid": 14667.98,
+  "late_fees": 0.0,
+  "late_payments": 0,
+  "outstanding_principal": 293735.7,
+  "next_due_date": "2024-08-25",
+  "schedule": [
+    {
+      "installment_no": 1,
+      "due_date": "2024-04-25",
+      "emi_amount": 16483.07,
+      "principal_component": 12601.82,
+      "interest_component": 3881.25,
+      "outstanding_balance": 332398.18,
+      "paid_date": "2024-04-23",
+      "late_fee": 0.0,
+      "status": "Paid"
+    },
+    {
+      "installment_no": 2,
+      "due_date": "2024-05-25",
+      "emi_amount": 16483.07,
+      "principal_component": 12743.59,
+      "interest_component": 3739.48,
+      "outstanding_balance": 319654.59,
+      "paid_date": "2024-05-25",
+      "late_fee": 0.0,
+      "status": "Paid"
+    },
+    {
+      "installment_no": 3,
+      "due_date": "2024-06-25",
+      "emi_amount": 16483.07,
+      "principal_component": 12886.96,
+      "interest_component": 3596.11,
+      "outstanding_balance": 306767.63,
+      "paid_date": "2024-06-25",
+      "late_fee": 0.0,
+      "status": "Paid"
+    },
+    {
+      "installment_no": 4,
+      "due_date": "2024-07-25",
+      "emi_amount": 16483.07,
+      "principal_component": 13031.93,
+      "interest_component": 3451.14,
+      "outstanding_balance": 293735.7,
+      "paid_date": "2024-07-25",
+      "late_fee": 0.0,
+      "status": "Paid"
+    },
+    {
+      "installment_no": 5,
+      "due_date": "2024-08-25",
+      "emi_amount": 16483.07,
+      "principal_component": 13178.54,
+      "interest_component": 3304.53,
+      "outstanding_balance": 280557.16,
+      "paid_date": null,
+      "late_fee": 0.0,
+      "status": "Due"
+    },
+    {
+      "installment_no": 6,
+      "due_date": "2024-09-25",
+      "emi_amount": 16483.07,
+      "principal_component": 13326.8,
+      "interest_component": 3156.27,
+      "outstanding_balance": 267230.36,
+      "paid_date": null,
+      "late_fee": 0.0,
+      "status": "Due"
+    }
+  ],
+  "file": "LR-018.pdf"
+}

@@ -1,0 +1,92 @@
+{
+  "receipt_id": "LR-001",
+  "lender": "Northstar Finance Ltd",
+  "layout": "A",
+  "loan_id": "NSF/2024/731262",
+  "loan_type": "Home Loan",
+  "borrower_name": "Aarav Joshi",
+  "branch": "Pune",
+  "principal_amount": 7080000.0,
+  "interest_rate": 8.5,
+  "tenure_months": 180,
+  "emi_amount": 69719.56,
+  "disbursement_date": "2024-01-21",
+  "statement_date": "2024-05-22",
+  "installments_paid": 4,
+  "total_paid": 278878.24,
+  "principal_repaid": 79113.89,
+  "interest_paid": 199764.35,
+  "late_fees": 0.0,
+  "late_payments": 0,
+  "outstanding_principal": 7000886.11,
+  "next_due_date": "2024-06-21",
+  "schedule": [
+    {
+      "installment_no": 1,
+      "due_date": "2024-02-21",
+      "emi_amount": 69719.56,
+      "principal_component": 19569.56,
+      "interest_component": 50150.0,
+      "outstanding_balance": 7060430.44,
+      "paid_date": "2024-02-21",
+      "late_fee": 0.0,
+      "status": "Paid"
+    },
+    {
+      "installment_no": 2,
+      "due_date": "2024-03-21",
+      "emi_amount": 69719.56,
+      "principal_component": 19708.18,
+      "interest_component": 50011.38,
+      "outstanding_balance": 7040722.26,
+      "paid_date": "2024-03-21",
+      "late_fee": 0.0,
+      "status": "Paid"
+    },
+    {
+      "installment_no": 3,
+      "due_date": "2024-04-21",
+      "emi_amount": 69719.56,
+      "principal_component": 19847.78,
+      "interest_component": 49871.78,
+      "outstanding_balance": 7020874.48,
+      "paid_date": "2024-04-21",
+      "late_fee": 0.0,
+      "status": "Paid"
+    },
+    {
+      "installment_no": 4,
+      "due_date": "2024-05-21",
+      "emi_amount": 69719.56,
+      "principal_component": 19988.37,
+      "interest_component": 49731.19,
+      "outstanding_balance": 7000886.11,
+      "paid_date": "2024-05-19",
+      "late_fee": 0.0,
+      "status": "Paid"
+    },
+    {
+      "installment_no": 5,
+      "due_date": "2024-06-21",
+      "emi_amount": 69719.56,
+      "principal_component": 20129.95,
+      "interest_component": 49589.61,
+      "outstanding_balance": 6980756.16,
+      "paid_date": null,
+      "late_fee": 0.0,
+      "status": "Due"
+    },
+    {
+      "installment_no": 6,
+      "due_date": "2024-07-21",
+      "emi_amount": 69719.56,
+      "principal_component": 20272.54,
+      "interest_component": 49447.02,
+      "outstanding_balance": 6960483.62,
+      "paid_date": null,
+      "late_fee": 0.0,
+      "status": "Due"
+    }
+  ],
+  "file": "LR-001.jpg"
+}

@@ -1,0 +1,103 @@
+{
+  "receipt_id": "LR-010",
+  "lender": "Northstar Finance Ltd",
+  "layout": "A",
+  "loan_id": "NSF/2024/903035",
+  "loan_type": "Home Loan",
+  "borrower_name": "Vikram Iyer",
+  "branch": "Delhi",
+  "principal_amount": 4645000.0,
+  "interest_rate": 8.5,
+  "tenure_months": 120,
+  "emi_amount": 57591.35,
+  "disbursement_date": "2024-10-21",
+  "statement_date": "2025-03-22",
+  "installments_paid": 5,
+  "total_paid": 287956.75,
+  "principal_repaid": 125207.59,
+  "interest_paid": 162749.16,
+  "late_fees": 0.0,
+  "late_payments": 0,
+  "outstanding_principal": 4519792.41,
+  "next_due_date": "2025-04-21",
+  "schedule": [
+    {
+      "installment_no": 1,
+      "due_date": "2024-11-21",
+      "emi_amount": 57591.35,
+      "principal_component": 24689.27,
+      "interest_component": 32902.08,
+      "outstanding_balance": 4620310.73,
+      "paid_date": "2024-11-21",
+      "late_fee": 0.0,
+      "status": "Paid"
+    },
+    {
+      "installment_no": 2,
+      "due_date": "2024-12-21",
+      "emi_amount": 57591.35,
+      "principal_component": 24864.15,
+      "interest_component": 32727.2,
+      "outstanding_balance": 4595446.58,
+      "paid_date": "2024-12-19",
+      "late_fee": 0.0,
+      "status": "Paid"
+    },
+    {
+      "installment_no": 3,
+      "due_date": "2025-01-21",
+      "emi_amount": 57591.35,
+      "principal_component": 25040.27,
+      "interest_component": 32551.08,
+      "outstanding_balance": 4570406.31,
+      "paid_date": "2025-01-20",
+      "late_fee": 0.0,
+      "status": "Paid"
+    },
+    {
+      "installment_no": 4,
+      "due_date": "2025-02-21",
+      "emi_amount": 57591.35,
+      "principal_component": 25217.64,
+      "interest_component": 32373.71,
+      "outstanding_balance": 4545188.67,
+      "paid_date": "2025-02-21",
+      "late_fee": 0.0,
+      "status": "Paid"
+    },
+    {
+      "installment_no": 5,
+      "due_date": "2025-03-21",
+      "emi_amount": 57591.35,
+      "principal_component": 25396.26,
+      "interest_component": 32195.09,
+      "outstanding_balance": 4519792.41,
+      "paid_date": "2025-03-19",
+      "late_fee": 0.0,
+      "status": "Paid"
+    },
+    {
+      "installment_no": 6,
+      "due_date": "2025-04-21",
+      "emi_amount": 57591.35,
+      "principal_component": 25576.15,
+      "interest_component": 32015.2,
+      "outstanding_balance": 4494216.26,
+      "paid_date": null,
+      "late_fee": 0.0,
+      "status": "Due"
+    },
+    {
+      "installment_no": 7,
+      "due_date": "2025-05-21",
+      "emi_amount": 57591.35,
+      "principal_component": 25757.32,
+      "interest_component": 31834.03,
+      "outstanding_balance": 4468458.94,
+      "paid_date": null,
+      "late_fee": 0.0,
+      "status": "Due"
+    }
+  ],
+  "file": "LR-010.pdf"
+}

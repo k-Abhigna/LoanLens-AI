@@ -1,0 +1,103 @@
+{
+  "receipt_id": "LR-016",
+  "lender": "Northstar Finance Ltd",
+  "layout": "A",
+  "loan_id": "NSF/2024/324130",
+  "loan_type": "Two-Wheeler Loan",
+  "borrower_name": "Siddharth Sharma",
+  "branch": "Chennai",
+  "principal_amount": 55000.0,
+  "interest_rate": 13.75,
+  "tenure_months": 36,
+  "emi_amount": 1873.1,
+  "disbursement_date": "2024-01-12",
+  "statement_date": "2024-06-14",
+  "installments_paid": 5,
+  "total_paid": 9365.5,
+  "principal_repaid": 6358.51,
+  "interest_paid": 3006.99,
+  "late_fees": 0.0,
+  "late_payments": 0,
+  "outstanding_principal": 48641.49,
+  "next_due_date": "2024-07-12",
+  "schedule": [
+    {
+      "installment_no": 1,
+      "due_date": "2024-02-12",
+      "emi_amount": 1873.1,
+      "principal_component": 1242.89,
+      "interest_component": 630.21,
+      "outstanding_balance": 53757.11,
+      "paid_date": "2024-02-12",
+      "late_fee": 0.0,
+      "status": "Paid"
+    },
+    {
+      "installment_no": 2,
+      "due_date": "2024-03-12",
+      "emi_amount": 1873.1,
+      "principal_component": 1257.13,
+      "interest_component": 615.97,
+      "outstanding_balance": 52499.98,
+      "paid_date": "2024-03-12",
+      "late_fee": 0.0,
+      "status": "Paid"
+    },
+    {
+      "installment_no": 3,
+      "due_date": "2024-04-12",
+      "emi_amount": 1873.1,
+      "principal_component": 1271.54,
+      "interest_component": 601.56,
+      "outstanding_balance": 51228.44,
+      "paid_date": "2024-04-11",
+      "late_fee": 0.0,
+      "status": "Paid"
+    },
+    {
+      "installment_no": 4,
+      "due_date": "2024-05-12",
+      "emi_amount": 1873.1,
+      "principal_component": 1286.11,
+      "interest_component": 586.99,
+      "outstanding_balance": 49942.33,
+      "paid_date": "2024-05-11",
+      "late_fee": 0.0,
+      "status": "Paid"
+    },
+    {
+      "installment_no": 5,
+      "due_date": "2024-06-12",
+      "emi_amount": 1873.1,
+      "principal_component": 1300.84,
+      "interest_component": 572.26,
+      "outstanding_balance": 48641.49,
+      "paid_date": "2024-06-11",
+      "late_fee": 0.0,
+      "status": "Paid"
+    },
+    {
+      "installment_no": 6,
+      "due_date": "2024-07-12",
+      "emi_amount": 1873.1,
+      "principal_component": 1315.75,
+      "interest_component": 557.35,
+      "outstanding_balance": 47325.74,
+      "paid_date": null,
+      "late_fee": 0.0,
+      "status": "Due"
+    },
+    {
+      "installment_no": 7,
+      "due_date": "2024-08-12",
+      "emi_amount": 1873.1,
+      "principal_component": 1330.83,
+      "interest_component": 542.27,
+      "outstanding_balance": 45994.91,
+      "paid_date": null,
+      "late_fee": 0.0,
+      "status": "Due"
+    }
+  ],
+  "file": "LR-016.pdf"
+}

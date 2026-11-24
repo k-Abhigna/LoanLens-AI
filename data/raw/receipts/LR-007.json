@@ -1,0 +1,92 @@
+{
+  "receipt_id": "LR-007",
+  "lender": "Northstar Finance Ltd",
+  "layout": "A",
+  "loan_id": "NSF/2025/930555",
+  "loan_type": "Gold Loan",
+  "borrower_name": "Ishita Kulkarni",
+  "branch": "Bengaluru",
+  "principal_amount": 110000.0,
+  "interest_rate": 11.5,
+  "tenure_months": 6,
+  "emi_amount": 18953.15,
+  "disbursement_date": "2025-01-25",
+  "statement_date": "2025-05-28",
+  "installments_paid": 4,
+  "total_paid": 75812.6,
+  "principal_repaid": 72631.72,
+  "interest_paid": 3180.88,
+  "late_fees": 0.0,
+  "late_payments": 0,
+  "outstanding_principal": 37368.28,
+  "next_due_date": "2025-06-25",
+  "schedule": [
+    {
+      "installment_no": 1,
+      "due_date": "2025-02-25",
+      "emi_amount": 18953.15,
+      "principal_component": 17898.98,
+      "interest_component": 1054.17,
+      "outstanding_balance": 92101.02,
+      "paid_date": "2025-02-25",
+      "late_fee": 0.0,
+      "status": "Paid"
+    },
+    {
+      "installment_no": 2,
+      "due_date": "2025-03-25",
+      "emi_amount": 18953.15,
+      "principal_component": 18070.52,
+      "interest_component": 882.63,
+      "outstanding_balance": 74030.5,
+      "paid_date": "2025-03-25",
+      "late_fee": 0.0,
+      "status": "Paid"
+    },
+    {
+      "installment_no": 3,
+      "due_date": "2025-04-25",
+      "emi_amount": 18953.15,
+      "principal_component": 18243.69,
+      "interest_component": 709.46,
+      "outstanding_balance": 55786.81,
+      "paid_date": "2025-04-23",
+      "late_fee": 0.0,
+      "status": "Paid"
+    },
+    {
+      "installment_no": 4,
+      "due_date": "2025-05-25",
+      "emi_amount": 18953.15,
+      "principal_component": 18418.53,
+      "interest_component": 534.62,
+      "outstanding_balance": 37368.28,
+      "paid_date": "2025-05-25",
+      "late_fee": 0.0,
+      "status": "Paid"
+    },
+    {
+      "installment_no": 5,
+      "due_date": "2025-06-25",
+      "emi_amount": 18953.15,
+      "principal_component": 18595.04,
+      "interest_component": 358.11,
+      "outstanding_balance": 18773.24,
+      "paid_date": null,
+      "late_fee": 0.0,
+      "status": "Due"
+    },
+    {
+      "installment_no": 6,
+      "due_date": "2025-07-25",
+      "emi_amount": 18953.15,
+      "principal_component": 18773.24,
+      "interest_component": 179.91,
+      "outstanding_balance": 0.0,
+      "paid_date": null,
+      "late_fee": 0.0,
+      "status": "Due"
+    }
+  ],
+  "file": "LR-007.pdf"
+}

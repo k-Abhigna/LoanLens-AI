@@ -96,6 +96,30 @@ Extraction and Q&A use **one model**, chosen by configuration, through one small
 | Q&A output | Valid citations required; numbers must appear in the cited passages; otherwise the LLM answer is replaced |
 | Retrieval | Filtered to one `application_id` (plus the shared policy); leakage is measured and gated in CI |
 
+## Loan receipts: Reducto parsing → Power BI
+
+A second document type: **loan repayment receipts** with EMI tables.
+
+1. **Generate** — `python scripts/generate_receipts.py` writes 18 synthetic receipts to
+   `data/raw/receipts/` (3 lenders × 3 layouts with different labels and column orders,
+   7 loan types, a third with late payments, 2 phone-scan JPGs) plus a ground-truth JSON next
+   to each one. EMI amounts use the standard reducing-balance formula; every schedule adds up.
+2. **Parse** — `python -m loanlens.parse` uploads each receipt to **Reducto** and extracts
+   loan metadata (loan ID, loan type, principal, interest rate, EMI), the payment summary and
+   the full EMI table into `data/parsed/<id>.json`. Already-parsed receipts are skipped, so
+   API credits are spent once (`--dry-run` shows what would be sent).
+3. **Evaluate** — `python evals/run_parse_eval.py` scores the parsed fields and EMI-table
+   cells against ground truth, by lender layout and PDF vs scan.
+4. **Report** — `python scripts/export_powerbi.py` builds `data/powerbi/loans.csv` and
+   `emi_schedule.csv`; the DAX measures (Total Principal, Total EMI Collected, Total Late
+   Fees, Average Interest Rate, Late Payment %) are in [docs/powerbi_dax.md](docs/powerbi_dax.md).
+
+| Receipt | Example |
+|---|---|
+| ![Receipt](docs/receipt_example.png) | Meridian Bank layout: EMI table with penalty column, late payments and a payment summary |
+
+Reducto results: not run yet (needs `REDUCTO_API_KEY`).
+
 ## Data: real numbers, generated documents
 
 - **Real:** borrower income, existing debt (via DTI), loan amount, term, EMI and **actual
@@ -271,6 +295,7 @@ LoanLens-AI/
 ├── src/loanlens/
 │   ├── generate/             # real borrower → documents, fraud injection, scans, layouts
 │   ├── harness.py            # the one LLM gateway: provider choice, retries, tracing
+│   ├── parse.py              # Reducto receipt parsing with on-disk cache
 │   ├── extract/              # OCR/PDF text, classifier, regex + LLM extractors, grounding
 │   ├── rag/                  # Q&A: chunking, TF-IDF index, guardrails, answer providers
 │   ├── checks.py             # cross-document verification
@@ -281,7 +306,7 @@ LoanLens-AI/
 │   ├── run_eval.py           # extraction, fraud and real-outcome evaluation
 │   ├── run_rag_eval.py       # Q&A retrieval, answers, guardrails, leakage (CI gate)
 │   └── harbor/               # Harbor tasks, verifier, LoanLens agent, results
-├── scripts/                  # Lending Club sampling, demo data
+├── scripts/                  # Lending Club sampling, demo data, receipts, Power BI export
 ├── tests/                    # pytest suite (runs in CI)
 └── docs/                     # scope and architecture
 ```
