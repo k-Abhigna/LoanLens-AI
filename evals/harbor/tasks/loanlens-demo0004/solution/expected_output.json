@@ -1,0 +1,42 @@
+{
+  "application": {
+    "applicant_name": "Kevin Wells",
+    "employer": "Redwood Manufacturing Co",
+    "job_title": "Project Manager",
+    "years_employed": 0,
+    "stated_annual_income": 76000.0,
+    "monthly_debt_payments": 1188.13,
+    "loan_amount": 26750.0,
+    "term_months": 36,
+    "monthly_installment": 953.04,
+    "purpose": "Home Improvement",
+    "home_ownership": "Own"
+  },
+  "payslip": {
+    "employee_name": "Kevin Wells",
+    "employer": "Redwood Manufacturing Co",
+    "pay_period": "2017-03-01 to 2017-03-31",
+    "gross_pay": 6333.33,
+    "total_deductions": 1683.85,
+    "net_pay": 4649.48,
+    "ytd_gross": 18999.99
+  },
+  "bank_statement": {
+    "account_holder": "Kevin Wells",
+    "opening_balance": 654.25,
+    "closing_balance": 8053.53,
+    "salary_credits": [
+      4649.48,
+      4649.48,
+      4649.48
+    ],
+    "salary_payer": "PAYROLL DEP REDWOOD MANUFACTURING"
+  },
+  "decision": "REVIEW",
+  "fraud_suspected": false,
+  "answers": {
+    "q1": "4,649.48",
+    "q2": "8,053.53",
+    "q3": "not found"
+  }
+}

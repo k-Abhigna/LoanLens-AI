@@ -18,8 +18,8 @@
   "guardrail_block_rate": 1.0,
   "cross_application_leakage": 0,
   "passages_retrieved": 1729,
-  "avg_answer_ms": 4.3,
-  "index_build_seconds": 10.8,
+  "avg_answer_ms": 4.5,
+  "index_build_seconds": 10.9,
   "failures": [
     {
       "application_id": "DEMO0001",

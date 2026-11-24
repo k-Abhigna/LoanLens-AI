@@ -53,7 +53,9 @@ flowchart LR
 | `extract/text.py` | PDF text or OCR text with reading-order reconstruction |
 | `extract/classify.py` | Document type from keywords |
 | `extract/rules.py` | Regex extraction baseline, OCR-noise tolerant |
-| `extract/llm.py` | Gemini JSON extraction with schema validation, retries and timeouts |
+| `harness.py` | The one LLM gateway for extraction and Q&A: provider from config (Gemini / Claude / none), retries, `LLMUnavailable`, PII-free call traces, prompt versions |
+| `extract/llm.py` | LLM JSON extraction through the harness, with schema validation and one retry |
+| `extract/grounding.py` | Output guardrail: drops extracted values that do not appear in the document text |
 | `checks.py` | Name, employer, arithmetic and income consistency checks; verified income |
 | `decide.py` | Credit policy → decision, reasons, risk score, confidence |
 | `audit.py` | Append-only log of AI recommendations and officer decisions |
@@ -64,6 +66,7 @@ flowchart LR
 | `rag/llm.py` | Answer providers: Gemini, Claude, offline extractive; falls back to extractive on any failure |
 | `rag/assistant.py` | `LoanKnowledgeBase`: ingest an application, two-lane retrieval, ask with guardrails |
 | `api.py` | FastAPI: upload documents → decision; ask questions about an application |
+| `evals/harbor/` | Harbor task suite (instruction, Dockerfile, verifier, oracle solution per application) and a Harbor agent that runs LoanLens |
 
 ## Key design decisions
 

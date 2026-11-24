@@ -1,0 +1,42 @@
+{
+  "application": {
+    "applicant_name": "Susan Hughes",
+    "employer": "Crestline Software Corp",
+    "job_title": "Truck Driver",
+    "years_employed": 0,
+    "stated_annual_income": 120500.0,
+    "monthly_debt_payments": 2837.78,
+    "loan_amount": 22000.0,
+    "term_months": 36,
+    "monthly_installment": 838.94,
+    "purpose": "Home Improvement",
+    "home_ownership": "Own"
+  },
+  "payslip": {
+    "employee_name": "Susan Hughes",
+    "employer": "Crestline Software Corp",
+    "pay_period": "2018-04-01 to 2018-04-30",
+    "gross_pay": 10041.67,
+    "total_deductions": 2326.62,
+    "net_pay": 7715.05,
+    "ytd_gross": 40166.68
+  },
+  "bank_statement": {
+    "account_holder": "Susan Hughes",
+    "opening_balance": 1742.7,
+    "closing_balance": 13643.98,
+    "salary_credits": [
+      7715.05,
+      7715.05,
+      7715.05
+    ],
+    "salary_payer": "PAYROLL DEP CRESTLINE SOFTWARE COR"
+  },
+  "decision": "REVIEW",
+  "fraud_suspected": false,
+  "answers": {
+    "q1": "7,715.05",
+    "q2": "13,643.98",
+    "q3": "not found"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "application": {
+    "applicant_name": "Susan Ramirez",
+    "employer": "Cobalt Energy Partners",
+    "job_title": "Sales Manager",
+    "years_employed": 6,
+    "stated_annual_income": 46500.0,
+    "monthly_debt_payments": 1047.41,
+    "loan_amount": 10500.0,
+    "term_months": 60,
+    "monthly_installment": 219.49,
+    "purpose": "Home Improvement",
+    "home_ownership": "Mortgage"
+  },
+  "payslip": {
+    "employee_name": "Susan Ramirez",
+    "employer": "Cobalt Energy Partners",
+    "pay_period": "2013-12-01 to 2013-12-31",
+    "gross_pay": 3875.0,
+    "total_deductions": 965.34,
+    "net_pay": 2909.66,
+    "ytd_gross": 46500.0
+  },
+  "bank_statement": {
+    "account_holder": "Susan Ramirez",
+    "opening_balance": 2139.41,
+    "closing_balance": 2287.07,
+    "salary_credits": [
+      2909.66,
+      2909.66,
+      2909.66
+    ],
+    "salary_payer": "PAYROLL DEP COBALT ENERGY PARTNERS"
+  },
+  "decision": "APPROVE",
+  "fraud_suspected": false,
+  "answers": {
+    "q1": "2,909.66",
+    "q2": "2,287.07",
+    "q3": "not found"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "application": {
+    "applicant_name": "Brian Perry",
+    "employer": "Northwind Logistics Inc",
+    "job_title": "Registered Nurse",
+    "years_employed": 6,
+    "stated_annual_income": 116500.0,
+    "monthly_debt_payments": 1584.4,
+    "loan_amount": 4250.0,
+    "term_months": 60,
+    "monthly_installment": 96.94,
+    "purpose": "Credit Card",
+    "home_ownership": "Rent"
+  },
+  "payslip": {
+    "employee_name": "Brian Perry",
+    "employer": "Pioneer Transport Co",
+    "pay_period": "2016-03-01 to 2016-03-31",
+    "gross_pay": 9708.33,
+    "total_deductions": 2551.71,
+    "net_pay": 7156.62,
+    "ytd_gross": 29124.99
+  },
+  "bank_statement": {
+    "account_holder": "Brian Perry",
+    "opening_balance": 572.81,
+    "closing_balance": 7239.96,
+    "salary_credits": [
+      7156.62,
+      7156.62,
+      7156.62
+    ],
+    "salary_payer": "PAYROLL DEP NORTHWIND LOGISTICS IN"
+  },
+  "decision": "REJECT",
+  "fraud_suspected": true,
+  "answers": {
+    "q1": "7,156.62",
+    "q2": "7,239.96",
+    "q3": "not found"
+  }
+}

@@ -1,0 +1,14 @@
+[
+  {
+    "id": "q1",
+    "question": "What is the net pay on the payslip?"
+  },
+  {
+    "id": "q2",
+    "question": "What closing balance does the bank statement show?"
+  },
+  {
+    "id": "q3",
+    "question": "What is the applicant's FICO credit score?"
+  }
+]

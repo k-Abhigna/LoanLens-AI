@@ -1,0 +1,42 @@
+{
+  "application": {
+    "applicant_name": "Maria Diaz",
+    "employer": "Redwood Manufacturing Co",
+    "job_title": "Office Assistant",
+    "years_employed": 0,
+    "stated_annual_income": 110500.0,
+    "monthly_debt_payments": 468.7,
+    "loan_amount": 12500.0,
+    "term_months": 60,
+    "monthly_installment": 324.39,
+    "purpose": "Debt Consolidation",
+    "home_ownership": "Mortgage"
+  },
+  "payslip": {
+    "employee_name": "Maria Diaz",
+    "employer": "Redwood Manufacturing Co",
+    "pay_period": "2014-09-01 to 2014-09-30",
+    "gross_pay": 9208.33,
+    "total_deductions": 2543.89,
+    "net_pay": 6664.44,
+    "ytd_gross": 82874.97
+  },
+  "bank_statement": {
+    "account_holder": "Maria Diaz",
+    "opening_balance": 1921.14,
+    "closing_balance": 10934.79,
+    "salary_credits": [
+      6664.44,
+      6664.44,
+      6664.44
+    ],
+    "salary_payer": "DIRECT DEPOSIT SALARY REDWOOD MANUFACTURING"
+  },
+  "decision": "REVIEW",
+  "fraud_suspected": false,
+  "answers": {
+    "q1": "6,664.44",
+    "q2": "10,934.79",
+    "q3": "not found"
+  }
+}

@@ -1,0 +1,23 @@
+schema_version = "1.4"
+
+[task]
+name = "loanlens/demo0006"
+description = "Underwrite one personal-loan application from its documents"
+keywords = ["document-extraction", "underwriting", "fraud", "rag"]
+
+[metadata]
+category = "document-intelligence"
+fraud_type = "none"
+payslip_file = "payslip.pdf"
+layouts = "B/A"
+
+[verifier]
+timeout_sec = 120.0
+
+[agent]
+timeout_sec = 900.0
+
+[environment]
+build_timeout_sec = 900.0
+cpus = 1
+memory_mb = 2048

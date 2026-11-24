@@ -1,0 +1,42 @@
+{
+  "application": {
+    "applicant_name": "Kevin Kim",
+    "employer": "Brightwave Telecom",
+    "job_title": "Electrician",
+    "years_employed": 1,
+    "stated_annual_income": 151000.0,
+    "monthly_debt_payments": 252.92,
+    "loan_amount": 28500.0,
+    "term_months": 36,
+    "monthly_installment": 917.07,
+    "purpose": "Debt Consolidation",
+    "home_ownership": "Rent"
+  },
+  "payslip": {
+    "employee_name": "Kevin Kim",
+    "employer": "Brightwave Telecom",
+    "pay_period": "2018-05-01 to 2018-05-31",
+    "gross_pay": 12583.33,
+    "total_deductions": 2908.79,
+    "net_pay": 9674.54,
+    "ytd_gross": 62916.65
+  },
+  "bank_statement": {
+    "account_holder": "Kevin Kim",
+    "opening_balance": 3179.65,
+    "closing_balance": 22812.35,
+    "salary_credits": [
+      9674.54,
+      9674.54,
+      9674.54
+    ],
+    "salary_payer": "DIRECT DEPOSIT SALARY BRIGHTWAVE TELECOM"
+  },
+  "decision": "APPROVE",
+  "fraud_suspected": false,
+  "answers": {
+    "q1": "9,674.54",
+    "q2": "22,812.35",
+    "q3": "not found"
+  }
+}

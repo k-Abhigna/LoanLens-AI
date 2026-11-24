@@ -1,7 +1,7 @@
 """Evaluate the whole system against ground truth.
 
     python evals/run_eval.py                       # rules baseline, all applications
-    python evals/run_eval.py --method gemini --limit 50 --sleep 7   # free tier: go slow
+    python evals/run_eval.py --method llm --limit 50 --sleep 7   # configured LLM; free tier: go slow
 
 Measures:
   1. Document classification accuracy
@@ -22,7 +22,7 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from loanlens.config import GENERATED_DIR, RESULTS_DIR  # noqa: E402
-from loanlens.pipeline import METHODS, process_folder  # noqa: E402
+from loanlens.pipeline import METHODS, method_label, process_folder  # noqa: E402
 from loanlens.schemas import ApplicationFields, BankStatementFields, PayslipFields  # noqa: E402
 
 FIELD_SETS = {
@@ -103,7 +103,7 @@ def evaluate(data_dir: Path, method: str, limit: int | None, sleep: float) -> di
             time.sleep(sleep)
 
     df = pd.DataFrame(rows)
-    return summarize(df, field_hits, cls_hits, method)
+    return summarize(df, field_hits, cls_hits, method_label(method))
 
 
 def summarize(df: pd.DataFrame, field_hits: dict, cls_hits: list, method: str) -> dict:
@@ -193,7 +193,7 @@ def main():
 
     results = evaluate(args.data, args.method, args.limit, args.sleep)
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
-    name = f"results_{args.method}{'_' + args.tag if args.tag else ''}"
+    name = f"results_{method_label(args.method).split()[0]}{'_' + args.tag if args.tag else ''}"
     (RESULTS_DIR / f"{name}.json").write_text(json.dumps(results, indent=2))
     (RESULTS_DIR / f"{name}.md").write_text(to_markdown(results))
     print("\n" + to_markdown(results))

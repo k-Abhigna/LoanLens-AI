@@ -10,7 +10,7 @@ Answers: `extractive` · extractor: `rules` · 40 applications · 1080 questions
 | Says "not found" when the file has no answer | 100.0% |
 | Adversarial questions blocked | 100.0% |
 | Passages leaked from other applications | 0 of 1729 |
-| Average answer time | 4.3 ms |
+| Average answer time | 4.5 ms |
 
 ## Answer accuracy by source
 

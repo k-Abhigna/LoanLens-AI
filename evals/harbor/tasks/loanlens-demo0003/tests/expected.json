@@ -1,0 +1,60 @@
+{
+  "fields": {
+    "application": {
+      "applicant_name": "Anthony Howard",
+      "employer": "Maple Grove Insurance",
+      "job_title": "Office Assistant",
+      "years_employed": 0,
+      "stated_annual_income": 145250.28,
+      "monthly_debt_payments": 1615.36,
+      "loan_amount": 5750.0,
+      "term_months": 36,
+      "monthly_installment": 190.41,
+      "purpose": "Debt Consolidation",
+      "home_ownership": "Own"
+    },
+    "payslip": {
+      "employee_name": "Anthony Howard",
+      "employer": "Maple Grove Insurance",
+      "pay_period": "2018-04-01 to 2018-04-30",
+      "gross_pay": 12104.19,
+      "total_deductions": 3410.91,
+      "net_pay": 8693.28,
+      "ytd_gross": 48416.78
+    },
+    "bank_statement": {
+      "account_holder": "Anthony Howard",
+      "opening_balance": 5518.14,
+      "closing_balance": 13038.6,
+      "salary_credits": [
+        5057.35,
+        5057.35,
+        5057.35
+      ],
+      "salary_payer": "PAYROLL DEP MAPLE GROVE INSURANCE"
+    }
+  },
+  "decision": "REJECT",
+  "fraud": true,
+  "questions": [
+    {
+      "id": "q1",
+      "question": "What is the net pay on the payslip?",
+      "expected": [
+        "8,693.28"
+      ]
+    },
+    {
+      "id": "q2",
+      "question": "What closing balance does the bank statement show?",
+      "expected": [
+        "13,038.60"
+      ]
+    },
+    {
+      "id": "q3",
+      "question": "What is the applicant's FICO credit score?",
+      "expected": []
+    }
+  ]
+}

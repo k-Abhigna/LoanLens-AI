@@ -68,9 +68,33 @@ above 35% → review; loan above 50% of annual income → review; under 1 year e
 |---|---|
 | **Index** | Each application becomes chunks of three kinds: raw **document** text (split at line boundaries, never mid-line), extracted **facts** (one per field, check and decision) and the **credit policy** (generated from `config.POLICY`, so it never drifts from the code). Every chunk carries `application_id`, `doc_type` and `kind` metadata. |
 | **Retrieve** | TF-IDF over word and character n-grams (character n-grams handle OCR output like `NetAmountPayable`), plus a lending glossary for query expansion ("closing balance" also finds "Ending Balance"). Results are **filtered by metadata** to this application plus the shared policy. Two lanes always run: raw text and facts, so a field the extractor misread can still be answered from the document. |
-| **Answer** | Gemini (same free key as extraction) or Claude when a key is set; otherwise an offline extractive answer built only from passage lines. If the LLM fails, the extractive answer is used. |
+| **Answer** | The same single LLM the extractor uses (see [One LLM, one harness](#one-llm-one-harness)); otherwise an offline extractive answer built only from passage lines. If the LLM fails, the extractive answer is used. |
 | **Input guardrail** | Blocks prompt injection, requests to approve / reject / change a decision, requests for SSNs or account numbers, and empty or oversized questions. |
 | **Output guardrail** | Every answer must cite a passage that exists, and **every number in it must appear in the cited passages**. An LLM answer that fails is replaced by the extractive answer. Questions the file can't answer get "not found" instead of a guess. |
+
+### One LLM, one harness
+
+Extraction and Q&A use **one model**, chosen by configuration, through one small harness
+(`src/loanlens/harness.py`). Every LLM call in the project goes through `harness.complete()`.
+
+| | |
+|---|---|
+| **Provider** | `LLM_PROVIDER=gemini` (default when `GEMINI_API_KEY` is set: free tier), `anthropic` (Claude, `claude-opus-5-5`) or `none` (offline rules + extractive answers). Switching model is a config change, not a code change. |
+| **Reliability** | Retries with backoff on rate limits, 5xx and timeouts; one `LLMUnavailable` error type, so every caller falls back to the offline path instead of crashing. |
+| **Tracing** | One line per call in `data/llm_traces.jsonl`: task, provider, model, prompt version, latency, success/error. Prompt and document text are **not** logged (applicant PII), only a short hash. `harness.trace_summary()` gives calls, error rate and p50/p95 latency per task. |
+| **Prompt versions** | Each prompt has a version (`extract-v2`, `qa-v1`) stored with every trace, so evaluation results and latency can be compared per prompt. |
+
+### Guardrails
+
+| Where | Guardrail |
+|---|---|
+| Upload (API) | PDF or image only, 10 MB per file |
+| Extraction input | Document text is passed as data; the system prompt tells the model to ignore instructions inside it |
+| Extraction output | Pydantic schema validation with one retry, then **grounding**: every value the LLM returns must appear in the document text (money compared as numbers, OCR-tolerant). An invented value is removed and reported in `ungrounded_fields`, so the check says "could not verify" and the case goes to REVIEW instead of being approved on a made-up income. |
+| Decision | Deterministic policy rules; missing values go to a human, never to "fraud"; officer overrides need a written reason |
+| Q&A input | Blocks prompt injection, decision requests, requests for SSNs / account numbers, empty or oversized questions |
+| Q&A output | Valid citations required; numbers must appear in the cited passages; otherwise the LLM answer is replaced |
+| Retrieval | Filtered to one `application_id` (plus the shared policy); leakage is measured and gated in CI |
 
 ## Data: real numbers, generated documents
 
@@ -122,6 +146,23 @@ Offline extractive answers with the rules extractor, so this is a lower bound th
 | Passages leaked from another applicant's file | **0 of 1,729** |
 | Average answer time | 4 ms |
 
+### Harbor benchmark (agent-level, in Docker)
+
+[Harbor](https://github.com/harbor-framework/harbor) runs an agent inside a sandboxed task and
+scores the result with a verifier. `evals/harbor/` turns each application into a Harbor task:
+the agent gets the three documents in `/app/documents/`, must extract the fields, apply the
+credit policy, flag fraud and answer three questions into `/app/output.json`, and
+`tests/grade.py` writes `reward.json` (field accuracy, decision, fraud, Q&A). The same tasks
+run any agent, so LoanLens can be compared with a general-purpose agent like Claude Code.
+
+| Agent (12 tasks, local Docker) | Reward | Fields | Decision | Fraud | Q&A |
+|---|---|---|---|---|---|
+| `oracle` (answer key: proves tasks and grader are consistent) | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 |
+| LoanLens agent, rules extractor, offline answers | 0.867 | 0.848 | 0.750 | 0.917 | 0.972 |
+
+Not run yet (needs an API key): LoanLens with the LLM extractor (`--ak method=llm`) and
+`-a claude-code`. Details: [evals/harbor/results.md](evals/harbor/results.md).
+
 The remaining misses are payslip questions where the rules extractor misread the document
 (e.g. the employer read as "PAY SLIP") or OCR scrambled the reading order of a scan. Full
 report: [evals/results/rag_extractive.md](evals/results/rag_extractive.md).
@@ -142,8 +183,8 @@ extractor's output; this has not been re-measured with Gemini yet. The Q&A numbe
 offline answers; they have not been measured with Gemini or Claude answers yet.
 
 Reproduce: `python evals/run_eval.py` (rules, all) ·
-`python evals/run_eval.py --method gemini --limit 60 --sleep 7` ·
-`python evals/run_rag_eval.py --limit 40` (Q&A)
+`python evals/run_eval.py --method llm --limit 60 --sleep 7` ·
+`python evals/run_rag_eval.py --limit 40` (Q&A) · Harbor: see step 6 of the quick start
 
 ## Quick start
 
@@ -182,16 +223,15 @@ Results are written to `evals/results/`.
 ### 4. Use an LLM (free)
 Copy `.env.example` to `.env`, create a free key at https://aistudio.google.com/apikey and set
 `GEMINI_API_KEY`. If the default model name is retired, set `GEMINI_MODEL` to a current free
-model. The app uses Gemini for extraction and for Q&A answers; if it is unavailable (no key,
-quota used up, timeout) it falls back to the offline rules / extractive answers and says so on
-screen.
+model. The app uses that one model for extraction and for Q&A answers; if it is unavailable
+(no key, quota used up, timeout) it falls back to the offline rules / extractive answers and
+says so on screen.
 
-To answer questions with Claude instead, set `ANTHROPIC_API_KEY` (and leave `GEMINI_API_KEY`
-empty, or set `LLM_PROVIDER=anthropic`).
+To use Claude for everything instead, set `ANTHROPIC_API_KEY` and `LLM_PROVIDER=anthropic`.
 
 ```powershell
-python evals/run_eval.py --method gemini --limit 100 --sleep 7
-python -m loanlens.pipeline data/generated/<application_id> --method gemini
+python evals/run_eval.py --method llm --limit 100 --sleep 7
+python -m loanlens.pipeline data/generated/<application_id> --method llm
 ```
 `--sleep` keeps you inside the free tier's rate limit (3 LLM calls per application).
 
@@ -205,7 +245,16 @@ curl -X POST http://127.0.0.1:8000/applications/<application_id>/ask -H "Content
 ```
 `POST /applications/sample/<id>` underwrites one of the generated demo applications.
 
-### 6. Tests
+### 6. Harbor benchmark (needs Docker, Python 3.12+)
+```bash
+pip install -r evals/harbor/requirements.txt
+python evals/harbor/build_tasks.py --limit 12
+harbor run -p evals/harbor/tasks -a oracle -n 4
+PYTHONPATH=. harbor run -p evals/harbor/tasks -a evals.harbor.loanlens_agent:LoanLensAgent --ak method=rules -n 4
+harbor run -p evals/harbor/tasks -a claude-code -m anthropic/claude-opus-5-5 -n 4   # general agent, needs ANTHROPIC_API_KEY
+```
+
+### 7. Tests
 ```powershell
 pytest -q
 ```
@@ -221,7 +270,8 @@ LoanLens-AI/
 ├── api.py                    # FastAPI: underwrite documents, ask questions
 ├── src/loanlens/
 │   ├── generate/             # real borrower → documents, fraud injection, scans, layouts
-│   ├── extract/              # OCR/PDF text, classifier, regex + LLM extractors
+│   ├── harness.py            # the one LLM gateway: provider choice, retries, tracing
+│   ├── extract/              # OCR/PDF text, classifier, regex + LLM extractors, grounding
 │   ├── rag/                  # Q&A: chunking, TF-IDF index, guardrails, answer providers
 │   ├── checks.py             # cross-document verification
 │   ├── decide.py             # credit policy engine
@@ -229,7 +279,8 @@ LoanLens-AI/
 │   └── audit.py              # decision log
 ├── evals/
 │   ├── run_eval.py           # extraction, fraud and real-outcome evaluation
-│   └── run_rag_eval.py       # Q&A retrieval, answers, guardrails, leakage (CI gate)
+│   ├── run_rag_eval.py       # Q&A retrieval, answers, guardrails, leakage (CI gate)
+│   └── harbor/               # Harbor tasks, verifier, LoanLens agent, results
 ├── scripts/                  # Lending Club sampling, demo data
 ├── tests/                    # pytest suite (runs in CI)
 └── docs/                     # scope and architecture
@@ -237,6 +288,8 @@ LoanLens-AI/
 
 ## Design decisions
 
+- **One LLM, behind one harness.** Extraction and Q&A share a model and a gateway, so there is
+  one key, one cost line, one set of traces, and switching provider is a config change.
 - **AI reads, code decides.** LLMs only convert documents into a validated schema and explain
   the file; lending decisions are deterministic, auditable rules.
 - **Missing ≠ fraud.** An unreadable field sends the case to a human instead of flagging fraud.

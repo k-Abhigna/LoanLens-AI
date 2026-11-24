@@ -1,0 +1,60 @@
+{
+  "fields": {
+    "application": {
+      "applicant_name": "Brian Perry",
+      "employer": "Brightwave Telecom",
+      "job_title": "Project Manager",
+      "years_employed": 0,
+      "stated_annual_income": 60818.88,
+      "monthly_debt_payments": 875.12,
+      "loan_amount": 18250.0,
+      "term_months": 36,
+      "monthly_installment": 650.84,
+      "purpose": "Medical",
+      "home_ownership": "Rent"
+    },
+    "payslip": {
+      "employee_name": "Brian Perry",
+      "employer": "Brightwave Telecom",
+      "pay_period": "2018-10-01 to 2018-10-31",
+      "gross_pay": 5068.24,
+      "total_deductions": 1123.2,
+      "net_pay": 2668.47,
+      "ytd_gross": 37916.7
+    },
+    "bank_statement": {
+      "account_holder": "Brian Perry",
+      "opening_balance": 1355.22,
+      "closing_balance": 1158.38,
+      "salary_credits": [
+        2668.47,
+        2668.47,
+        2668.47
+      ],
+      "salary_payer": "DIRECT DEPOSIT SALARY BRIGHTWAVE TELECOM"
+    }
+  },
+  "decision": "REJECT",
+  "fraud": true,
+  "questions": [
+    {
+      "id": "q1",
+      "question": "What is the net pay on the payslip?",
+      "expected": [
+        "2,668.47"
+      ]
+    },
+    {
+      "id": "q2",
+      "question": "What closing balance does the bank statement show?",
+      "expected": [
+        "1,158.38"
+      ]
+    },
+    {
+      "id": "q3",
+      "question": "What is the applicant's FICO credit score?",
+      "expected": []
+    }
+  ]
+}

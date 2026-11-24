@@ -101,9 +101,11 @@ def test_output_guardrail_catches_invented_numbers():
 
 
 def test_bad_llm_answer_is_replaced(kb, monkeypatch):
+    from loanlens.harness import LLMResult
+
     monkeypatch.setenv("LLM_PROVIDER", "gemini")
-    monkeypatch.setattr("loanlens.rag.llm.answer_gemini",
-                        lambda q, hits: "The net pay is $99,999.99 [1]")
+    monkeypatch.setattr("loanlens.rag.llm.complete", lambda *a, **k: LLMResult(
+        "The net pay is $99,999.99 [1]", "gemini", "test-model", 1.0))
     r = kb.ask("What is the net pay on the payslip?", application_id="CLEAN")
     assert "99,999.99" not in r["answer"]
     assert "ungrounded_numbers" in r["output_flags"]

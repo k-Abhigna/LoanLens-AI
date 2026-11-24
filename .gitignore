@@ -13,3 +13,5 @@ evals/results/*_demo.*
 data/rag_index.joblib
 evals/results/*_dev.*
 evals/results/*_ci.*
+jobs/
+data/llm_traces.jsonl

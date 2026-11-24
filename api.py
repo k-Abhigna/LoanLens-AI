@@ -54,7 +54,7 @@ def applications() -> dict:
 
 @app.post("/applications")
 async def underwrite(files: list[UploadFile] = File(...),
-                     method: Literal["rules", "gemini"] = "rules") -> dict:
+                     method: Literal["rules", "llm"] = "rules") -> dict:
     """Run the underwriting pipeline on uploaded documents and index them for Q&A."""
     folder = Path(tempfile.mkdtemp(prefix="loanlens-"))
     for up in files:
@@ -73,7 +73,7 @@ async def underwrite(files: list[UploadFile] = File(...),
 
 
 @app.post("/applications/sample/{application_id}")
-def underwrite_sample(application_id: str, method: Literal["rules", "gemini"] = "rules") -> dict:
+def underwrite_sample(application_id: str, method: Literal["rules", "llm"] = "rules") -> dict:
     """Underwrite one of the generated sample applications (see README quick start)."""
     folder = GENERATED_DIR / Path(application_id).name
     if not folder.is_dir():

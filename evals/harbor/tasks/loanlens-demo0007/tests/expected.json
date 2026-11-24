@@ -1,0 +1,60 @@
+{
+  "fields": {
+    "application": {
+      "applicant_name": "Robert Kim",
+      "employer": "Brightwave Telecom",
+      "job_title": "Electrician",
+      "years_employed": 0,
+      "stated_annual_income": 260637.48,
+      "monthly_debt_payments": 3590.83,
+      "loan_amount": 32000.0,
+      "term_months": 36,
+      "monthly_installment": 1235.38,
+      "purpose": "Home Improvement",
+      "home_ownership": "Rent"
+    },
+    "payslip": {
+      "employee_name": "Robert Kim",
+      "employer": "Brightwave Telecom",
+      "pay_period": "2016-11-01 to 2016-11-30",
+      "gross_pay": 21719.79,
+      "total_deductions": 6373.48,
+      "net_pay": 15346.31,
+      "ytd_gross": 238917.71
+    },
+    "bank_statement": {
+      "account_holder": "Robert Kim",
+      "opening_balance": 2770.46,
+      "closing_balance": 10906.88,
+      "salary_credits": [
+        9126.38,
+        9126.38,
+        9126.38
+      ],
+      "salary_payer": "PAYROLL DEP BRIGHTWAVE TELECOM"
+    }
+  },
+  "decision": "REJECT",
+  "fraud": true,
+  "questions": [
+    {
+      "id": "q1",
+      "question": "What is the net pay on the payslip?",
+      "expected": [
+        "15,346.31"
+      ]
+    },
+    {
+      "id": "q2",
+      "question": "What closing balance does the bank statement show?",
+      "expected": [
+        "10,906.88"
+      ]
+    },
+    {
+      "id": "q3",
+      "question": "What is the applicant's FICO credit score?",
+      "expected": []
+    }
+  ]
+}

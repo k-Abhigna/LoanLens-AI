@@ -1,22 +1,18 @@
-"""Answer generation with interchangeable providers.
+"""Answer generation.
 
-Selection (override with LLM_PROVIDER=gemini|anthropic|extractive):
-  1. gemini     - if GEMINI_API_KEY is set (the same free key the extractor uses)
-  2. anthropic  - if ANTHROPIC_API_KEY is set
-  3. extractive - always available, no model: returns the best-matching lines, cited
-If an LLM call fails, the extractive answer is returned instead, so the assistant never breaks.
+The LLM is the same single model the extractor uses, through loanlens/harness.py (Gemini by
+default, or Claude). With no model configured, or if the call fails, the answer is
+extractive: the best-matching passage lines, cited. So the assistant never breaks.
 """
 
 from __future__ import annotations
 
-import os
 from collections.abc import Callable
 
+from loanlens.harness import LLMUnavailable, complete, provider_name
 from loanlens.rag.chunking import Chunk
 from loanlens.rag.guardrails import NOT_FOUND
 from loanlens.rag.text import expand, tokens
-
-ANTHROPIC_MODEL = os.getenv("ANTHROPIC_MODEL", "claude-opus-5-5")
 
 SYSTEM_PROMPT = f"""You help a bank loan officer review ONE personal-loan application.
 Answer only from the numbered context passages. Cite every passage you use with bracketed
@@ -40,40 +36,7 @@ def _user_prompt(question: str, hits: list[tuple[Chunk, float]]) -> str:
 
 
 def pick_provider() -> str:
-    forced = os.getenv("LLM_PROVIDER")
-    if forced:
-        return forced
-    if os.getenv("GEMINI_API_KEY"):
-        return "gemini"
-    if os.getenv("ANTHROPIC_API_KEY"):
-        return "anthropic"
-    return "extractive"
-
-
-def answer_gemini(question: str, hits: list[tuple[Chunk, float]]) -> str:
-    from loanlens.extract.llm import _call_gemini  # reuses the extractor's retries and timeouts
-
-    return _call_gemini(f"{SYSTEM_PROMPT}\n\n{_user_prompt(question, hits)}",
-                        json_mode=False).strip()
-
-
-def answer_anthropic(question: str, hits: list[tuple[Chunk, float]]) -> str:
-    import anthropic
-
-    client = anthropic.Anthropic()
-    response = client.beta.messages.create(
-        model=ANTHROPIC_MODEL,
-        max_tokens=4000,
-        system=SYSTEM_PROMPT,
-        messages=[{"role": "user", "content": _user_prompt(question, hits)}],
-        output_config={"effort": "low"},  # short grounded answers don't need deep reasoning
-        # Server-side fallback: if a safety classifier declines, the API retries on a fallback model.
-        betas=["server-side-fallback-2026-07-01"],
-        fallbacks="default",
-    )
-    if response.stop_reason == "refusal":
-        return "The model declined to answer this question."
-    return "".join(b.text for b in response.content if b.type == "text").strip()
+    return provider_name() or "extractive"
 
 
 def answer_extractive(question: str, hits: list[tuple[Chunk, float]], max_lines: int = 2,
@@ -115,12 +78,11 @@ def generate_answer(question: str, hits: list[tuple[Chunk, float]],
     """Return (answer, provider_used). Falls back to extractive if the LLM call fails."""
     if not hits:
         return NOT_FOUND, "none"
-    provider = pick_provider()
+    if provider_name() is None:
+        return answer_extractive(question, hits, idf=idf), "extractive"
     try:
-        if provider == "gemini":
-            return answer_gemini(question, hits), "gemini"
-        if provider == "anthropic":
-            return answer_anthropic(question, hits), f"anthropic:{ANTHROPIC_MODEL}"
-    except Exception as exc:  # network/auth/quota: degrade gracefully instead of failing
-        return answer_extractive(question, hits, idf=idf), f"extractive (LLM unavailable: {type(exc).__name__})"
-    return answer_extractive(question, hits, idf=idf), "extractive"
+        result = complete("qa", _user_prompt(question, hits), system=SYSTEM_PROMPT)
+    except LLMUnavailable as exc:  # network/auth/quota: degrade gracefully instead of failing
+        return (answer_extractive(question, hits, idf=idf),
+                f"extractive (LLM unavailable: {str(exc)[:60]})")
+    return result.text.strip(), f"{result.provider}:{result.model}"

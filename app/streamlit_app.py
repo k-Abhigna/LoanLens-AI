@@ -88,9 +88,9 @@ def ensure_demo_data() -> None:
 
 
 def run_underwriting(files: list[Path]) -> dict:
-    """Gemini first; if it is unavailable, fall back to the offline rules so the app never breaks."""
+    """The configured LLM first; if none is set or it fails, fall back to the offline rules."""
     try:
-        return process_documents(files, "gemini")
+        return process_documents(files, "llm")
     except Exception as err:
         result = process_documents(files, "rules")
         result["fallback_reason"] = f"{type(err).__name__}: {err}"[:200]
@@ -184,7 +184,7 @@ def forensics_view(result: dict) -> None:
     net, credits = slip.get("net_pay"), bank.get("salary_credits") or []
     if not credits:
         st.info("No salary deposits could be read from the bank statement, so there is "
-                "nothing to compare. This happens when Gemini was unavailable and the rules "
+                "nothing to compare. This happens when the LLM was unavailable and the rules "
                 "fallback met a bank-statement layout it does not know.")
         return
 
@@ -364,7 +364,7 @@ def officer_form(result: dict, app_id: str) -> None:
 
 def show_result(result: dict, files: list[Path], app_id: str, truth: dict | None) -> None:
     if result.get("fallback_reason"):
-        st.warning("Gemini was unavailable, so the offline rules baseline was used. It only "
+        st.warning("The LLM was unavailable, so the offline rules baseline was used. It only "
                    "knows one payslip and bank-statement layout and can misread others. "
                    f"Reason: {result['fallback_reason']}")
     step_tracker(result)
@@ -420,7 +420,7 @@ with tab_review:
             app_id = f"upload-{tmp.name}"
 
     if files and st.button("Run underwriting", type="primary"):
-        with st.spinner("Reading documents with Gemini (about 10–20 seconds)..."):
+        with st.spinner("Reading documents with the LLM (about 10–20 seconds)..."):
             try:
                 result = run_underwriting(files)
                 knowledge_base().ingest_application(app_id, files, result)

@@ -56,7 +56,13 @@ def test_ocr_cleanup_applies_to_any_extractor():
 def test_llm_retries_once_on_invalid_json(monkeypatch):
     answers = iter(['{"gross_pay": "lots"}', json.dumps({"gross_pay": 5000.0, "net_pay": 3900.0})])
     calls = []
-    monkeypatch.setitem(llm.PROVIDERS, "fake", lambda prompt: calls.append(prompt) or next(answers))
+    from loanlens.harness import LLMResult
+
+    def fake(task, prompt, **kwargs):
+        calls.append(prompt)
+        return LLMResult(next(answers), "fake", "fake", 1.0)
+
+    monkeypatch.setattr(llm, "complete", fake)
     slip = llm.extract("payslip", "Gross Pay: $5,000.00", provider="fake")
     assert slip.gross_pay == 5000.0 and len(calls) == 2
     assert "previous answer was invalid" in calls[1]
