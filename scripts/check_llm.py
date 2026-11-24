@@ -10,6 +10,10 @@ import os
 import sys
 from pathlib import Path
 
+# A quick check should fail fast, not wait minutes for a slow or blocked connection.
+os.environ.setdefault("GEMINI_TIMEOUT", "20")
+print("Checking the LLM setup...", flush=True)
+
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
@@ -42,7 +46,28 @@ provider = provider_name()
 if provider is None:
     print("\nNo LLM configured: the app will run offline (rules + extractive answers).")
     sys.exit(1)
-print(f"\nProvider: {provider}, model: {model_name(provider)}. Sending a test request...")
+print(f"\nProvider: {provider}, model: {model_name(provider)}. Sending a test request "
+      f"(gives up after about 20 seconds)...", flush=True)
+if provider == "gemini":
+    import requests
+
+    key = os.getenv("GEMINI_API_KEY") or values.get("GEMINI_API_KEY") or ""
+    model = model_name(provider)
+    try:  # one direct call, no retries, so the answer comes back quickly
+        resp = requests.post(
+            f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
+            headers={"x-goog-api-key": key}, timeout=20,
+            json={"contents": [{"parts": [{"text": "Reply with the single word OK"}]}]})
+    except requests.RequestException as err:
+        print(f"\nFAILED: could not reach Google ({type(err).__name__}). Check your internet, "
+              "VPN or office firewall.")
+        sys.exit(1)
+    if not resp.ok:
+        print(f"\nFAILED: Gemini {resp.status_code}: {resp.text[:400]}")
+        sys.exit(1)
+    text = resp.json()["candidates"][0]["content"]["parts"][0]["text"]
+    print(f"\nSUCCESS: gemini {model} replied {text.strip()!r}")
+    sys.exit(0)
 try:
     result = complete("qa", "Reply with the single word OK")
 except LLMUnavailable as err:
