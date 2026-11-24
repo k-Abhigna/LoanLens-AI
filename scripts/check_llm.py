@@ -29,8 +29,6 @@ for name in ("GEMINI_API_KEY", "ANTHROPIC_API_KEY"):
         issues.append("contains spaces")
     if key and key[0] in "\"'":
         issues.append("wrapped in quotes")
-    if name == "GEMINI_API_KEY" and key and not key.startswith("AIza"):
-        issues.append("does not start with AIza (is this an AI Studio key?)")
     lines = [ln for ln in env_file.read_text(encoding="utf-8", errors="ignore").splitlines()
              if ln.strip().startswith(f"{name}=")] if env_file.exists() else []
     if len(lines) > 1:
@@ -63,7 +61,13 @@ if provider == "gemini":
               "VPN or office firewall.")
         sys.exit(1)
     if not resp.ok:
-        print(f"\nFAILED: Gemini {resp.status_code}: {resp.text[:400]}")
+        hint = {400: "The key is not valid: create a new one at aistudio.google.com/apikey.",
+                403: "The key is not allowed to use this API or model.",
+                404: f"Model {model!r} not found: set GEMINI_MODEL in .env to a current model.",
+                429: "Free-tier quota used up for now: wait and retry.",
+                503: "Your key WORKS - Google's model is overloaded. Retry in a minute, or set "
+                     "GEMINI_MODEL in .env to another model."}.get(resp.status_code, "")
+        print(f"\nFAILED: Gemini {resp.status_code}. {hint}\n{resp.text[:300]}")
         sys.exit(1)
     text = resp.json()["candidates"][0]["content"]["parts"][0]["text"]
     print(f"\nSUCCESS: gemini {model} replied {text.strip()!r}")
