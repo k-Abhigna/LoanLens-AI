@@ -14,7 +14,7 @@ Plan = the handwritten "Resume Preparation" notes. ✅ done · ⬜ left for you 
 | 6 | Lightweight AI harness | ✅ | `src/loanlens/harness.py` |
 | 7 | Automated evals | 🟡 | Offline evals + Harbor done. **Run with an LLM:** set `GEMINI_API_KEY`, then `python evals/run_eval.py --method llm --limit 60 --sleep 7`, `python evals/run_rag_eval.py` and Harbor `--ak method=llm`; optionally `-a claude-code` |
 | 8 | Clean README: flow diagram, eval table, setup | 🟡 | Add Reducto + LLM numbers, a Power BI screenshot and the live demo link when you have them |
-| — | Power BI dashboard (DAX measures) | ⬜ | `python scripts/export_powerbi.py`, load the two CSVs, paste measures from `docs/powerbi_dax.md`, screenshot into `docs/` |
+| — | Power BI dashboard (DAX measures) | 🟡 | Project built: `powerbi/LoanLens.pbip`. **Open it in Power BI Desktop, Refresh, check the numbers, Save As .pbix, screenshot into `docs/`** |
 | — | Live demo | ⬜ | Redeploy on Streamlit Cloud from `LoanLens-AI` (`app/streamlit_app.py`), add `GEMINI_API_KEY` in Secrets, put the link in the README |
 | — | Local copy | ⬜ | `git clone https://github.com/k-Abhigna/LoanLens-AI.git` into `C:\Job\Resume\My Projects\AI Project` |
 

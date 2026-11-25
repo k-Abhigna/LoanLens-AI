@@ -1,0 +1,206 @@
+table Loans
+	lineageTag: c90be8f4-cd8c-5b9e-9247-2454988617b9
+
+	/// Sum of sanctioned principal across loans (INR)
+	measure 'Total Principal' = SUM ( Loans[Principal_Amount] )
+		formatString: #,##0
+		lineageTag: b1112e79-a4ec-5637-9e82-2024f1bec5e0
+
+	/// Sum of EMIs paid to date (INR)
+	measure 'Total EMI Collected' = SUM ( Loans[Total_Paid] )
+		formatString: #,##0
+		lineageTag: 63d62a96-ee7f-5b2a-aaeb-c2df24f9e2e3
+
+	/// Sum of late payment charges (INR)
+	measure 'Total Late Fees' = SUM ( Loans[Late_Fees] )
+		formatString: #,##0.00
+		lineageTag: 430d9b02-557b-5c1e-9b8c-7682f55bcc7a
+
+	/// Average annual interest rate (percent)
+	measure 'Average Interest Rate' = AVERAGE ( Loans[Interest_Rate] )
+		formatString: 0.00
+		lineageTag: 3e58097d-d275-594c-beec-0ccd45fa72c1
+
+	/// Share of loans with at least one late payment
+	measure 'Late Payment %' = DIVIDE ( CALCULATE ( COUNTROWS ( Loans ), Loans[Late_Fees] > 0 ), COUNTROWS ( Loans ), 0 )
+		formatString: 0.0%
+		lineageTag: 10453bb3-3555-5e66-b988-06306e4a4ae0
+
+	/// Principal still to be repaid (INR)
+	measure 'Outstanding Principal' = SUM ( Loans[Outstanding_Principal] )
+		formatString: #,##0
+		lineageTag: 91bfe94a-2b99-508c-a36d-0d2602929359
+
+	/// Number of instalments paid late
+	measure 'Late Instalments' = CALCULATE ( COUNTROWS ( EMI_Schedule ), EMI_Schedule[Status] = "Paid Late" )
+		formatString: 0
+		lineageTag: 5eca0294-001e-55f3-9b37-92fc3a4f23e4
+
+	column Loan_ID
+		dataType: string
+		lineageTag: 012b2ec0-151c-5c42-a311-2fa79e7f98fa
+		summarizeBy: none
+		sourceColumn: Loan_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Receipt_ID
+		dataType: string
+		lineageTag: 97d8139c-3dea-596c-a4d9-6c27f86bdf9b
+		summarizeBy: none
+		sourceColumn: Receipt_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Lender
+		dataType: string
+		lineageTag: 179d8a95-1cb0-55cd-9d9c-24ddcca800b1
+		summarizeBy: none
+		sourceColumn: Lender
+
+		annotation SummarizationSetBy = Automatic
+
+	column Loan_Type
+		dataType: string
+		lineageTag: 59e366a8-a3ec-533d-869a-bcc09ee4d45a
+		summarizeBy: none
+		sourceColumn: Loan_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Borrower
+		dataType: string
+		lineageTag: 229217ba-f349-5e8b-815f-fa5727a113c8
+		summarizeBy: none
+		sourceColumn: Borrower
+
+		annotation SummarizationSetBy = Automatic
+
+	column Principal_Amount
+		dataType: double
+		formatString: #,##0
+		lineageTag: 9848caed-f446-51ef-b050-07002939a869
+		summarizeBy: sum
+		sourceColumn: Principal_Amount
+
+		annotation SummarizationSetBy = Automatic
+
+	column Interest_Rate
+		dataType: double
+		formatString: 0.00
+		lineageTag: a61569bb-61c9-55a3-b7d5-c858ed26d924
+		summarizeBy: none
+		sourceColumn: Interest_Rate
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tenure_Months
+		dataType: int64
+		formatString: 0
+		lineageTag: aa520b63-747d-5ea7-8d5d-3ecb110b38ff
+		summarizeBy: none
+		sourceColumn: Tenure_Months
+
+		annotation SummarizationSetBy = Automatic
+
+	column EMI_Amount
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 2dada1c7-f855-5e5a-ab41-fbfa3f060d64
+		summarizeBy: sum
+		sourceColumn: EMI_Amount
+
+		annotation SummarizationSetBy = Automatic
+
+	column Disbursement_Date
+		dataType: dateTime
+		formatString: dd-mmm-yyyy
+		lineageTag: 3f89c29d-328c-5310-925e-6cb2498a3b6f
+		summarizeBy: none
+		sourceColumn: Disbursement_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Installments_Paid
+		dataType: int64
+		formatString: 0
+		lineageTag: 33be4597-f888-51fd-8efb-cc10f27f5251
+		summarizeBy: sum
+		sourceColumn: Installments_Paid
+
+		annotation SummarizationSetBy = Automatic
+
+	column Total_Paid
+		dataType: double
+		formatString: #,##0
+		lineageTag: 8ddb4945-2024-585a-9173-62b0cdfb9bc3
+		summarizeBy: sum
+		sourceColumn: Total_Paid
+
+		annotation SummarizationSetBy = Automatic
+
+	column Principal_Repaid
+		dataType: double
+		formatString: #,##0
+		lineageTag: a5750030-d195-5469-b207-084bf11eac22
+		summarizeBy: sum
+		sourceColumn: Principal_Repaid
+
+		annotation SummarizationSetBy = Automatic
+
+	column Interest_Paid
+		dataType: double
+		formatString: #,##0
+		lineageTag: e2326da1-18db-58a1-bf3c-320923232f76
+		summarizeBy: sum
+		sourceColumn: Interest_Paid
+
+		annotation SummarizationSetBy = Automatic
+
+	column Late_Fees
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: de7250b2-09b8-5207-81e5-e25d5b50c2a8
+		summarizeBy: sum
+		sourceColumn: Late_Fees
+
+		annotation SummarizationSetBy = Automatic
+
+	column Outstanding_Principal
+		dataType: double
+		formatString: #,##0
+		lineageTag: 13e068bb-b6f9-52ce-9fc5-9b03bcdcfaac
+		summarizeBy: sum
+		sourceColumn: Outstanding_Principal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Next_Due_Date
+		dataType: dateTime
+		formatString: dd-mmm-yyyy
+		lineageTag: b5ebadd0-0ccf-529f-b093-d89320abc3ce
+		summarizeBy: none
+		sourceColumn: Next_Due_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Source
+		dataType: string
+		lineageTag: a4c88e5f-e8b9-51eb-aa9c-f9270b56d183
+		summarizeBy: none
+		sourceColumn: Source
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Loans = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "\loans.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Blanks = Table.TransformColumns(Headers, {}, each if _ = "" then null else _),
+				    Typed = Table.TransformColumnTypes(Blanks, {{"Loan_ID", type text}, {"Receipt_ID", type text}, {"Lender", type text}, {"Loan_Type", type text}, {"Borrower", type text}, {"Principal_Amount", type number}, {"Interest_Rate", type number}, {"Tenure_Months", Int64.Type}, {"EMI_Amount", type number}, {"Disbursement_Date", type date}, {"Installments_Paid", Int64.Type}, {"Total_Paid", type number}, {"Principal_Repaid", type number}, {"Interest_Paid", type number}, {"Late_Fees", type number}, {"Outstanding_Principal", type number}, {"Next_Due_Date", type date}, {"Source", type text}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

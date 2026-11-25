@@ -1,0 +1,5 @@
+expression DataFolder = "C:\Job\MyProject\LoanLens-AI\data\powerbi" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: eed1679e-aadb-5efd-aa3b-30a32d68f3d4
+
+	annotation PBI_ResultType = Text
+

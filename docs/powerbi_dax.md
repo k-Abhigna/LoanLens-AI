@@ -1,5 +1,19 @@
 # Power BI: loan receipts dashboard
 
+**Ready-made project:** open `powerbi/LoanLens.pbip` in Power BI Desktop. It contains the
+two tables, the relationship, all measures below and a one-page dashboard (5 KPI cards,
+principal by loan type, late payment % by lender, loans table).
+
+1. Open `powerbi/LoanLens.pbip` (double-click, or File > Open in Power BI Desktop).
+2. If your project is not in `C:\Job\MyProject\LoanLens-AI`, go to Transform data >
+   Edit parameters and set **DataFolder** to your `...\LoanLens-AI\data\powerbi` folder.
+3. Click **Refresh**. Expected values on the generated receipts: Total Principal
+   22,380,000 · Total EMI Collected 3,201,125 · Total Late Fees 9,531.93 · Average
+   Interest Rate 11.94 · Late Payment % 33.3%.
+4. Optional: File > Save As > `LoanLens.pbix` for a single file to share.
+
+Rebuild the project files with `python scripts/build_powerbi_project.py`.
+
 Data: `data/powerbi/loans.csv` (table **Loans**, one row per loan) and
 `data/powerbi/emi_schedule.csv` (table **EMI_Schedule**, one row per instalment).
 Build them with `python scripts/export_powerbi.py` after parsing (or `--source truth`).

@@ -1,0 +1,4 @@
+relationship f679c509-f950-5707-aa8b-90331bd5f90e
+	fromColumn: EMI_Schedule.Loan_ID
+	toColumn: Loans.Loan_ID
+

@@ -1,0 +1,103 @@
+table EMI_Schedule
+	lineageTag: 90622983-92d0-5876-be23-94dcbcbb867e
+
+	column Loan_ID
+		dataType: string
+		lineageTag: 907dadd4-a1f1-5e91-a400-7578387dd89f
+		summarizeBy: none
+		sourceColumn: Loan_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Installment_No
+		dataType: int64
+		formatString: 0
+		lineageTag: 25159cf8-18e2-53c1-bef7-ef3690e1d7b0
+		summarizeBy: none
+		sourceColumn: Installment_No
+
+		annotation SummarizationSetBy = Automatic
+
+	column Due_Date
+		dataType: dateTime
+		formatString: dd-mmm-yyyy
+		lineageTag: 52b565ee-4d3a-5bf4-9265-b6ab9b105e23
+		summarizeBy: none
+		sourceColumn: Due_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Paid_Date
+		dataType: dateTime
+		formatString: dd-mmm-yyyy
+		lineageTag: ee4a36aa-2ea7-59e5-b2a1-b100ca70f582
+		summarizeBy: none
+		sourceColumn: Paid_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column EMI_Amount
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 350b808e-31f3-58c9-9bd7-c4d6a5b98036
+		summarizeBy: sum
+		sourceColumn: EMI_Amount
+
+		annotation SummarizationSetBy = Automatic
+
+	column Principal_Component
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 2fc2d230-5c51-54a7-8b34-b3523f37ddc0
+		summarizeBy: sum
+		sourceColumn: Principal_Component
+
+		annotation SummarizationSetBy = Automatic
+
+	column Interest_Component
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: b1f8078e-8f33-5b1b-99df-df5f6e271dc9
+		summarizeBy: sum
+		sourceColumn: Interest_Component
+
+		annotation SummarizationSetBy = Automatic
+
+	column Late_Fee
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 9f365206-dd9b-5dc8-a94c-63642fa34c1e
+		summarizeBy: sum
+		sourceColumn: Late_Fee
+
+		annotation SummarizationSetBy = Automatic
+
+	column Outstanding_Balance
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 06689461-7959-560f-9d37-897d78375773
+		summarizeBy: sum
+		sourceColumn: Outstanding_Balance
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: 01ed7bef-adc5-5eb5-94be-4b92c83d628d
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	partition EMI_Schedule = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "\emi_schedule.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Blanks = Table.TransformColumns(Headers, {}, each if _ = "" then null else _),
+				    Typed = Table.TransformColumnTypes(Blanks, {{"Loan_ID", type text}, {"Installment_No", Int64.Type}, {"Due_Date", type date}, {"Paid_Date", type date}, {"EMI_Amount", type number}, {"Principal_Component", type number}, {"Interest_Component", type number}, {"Late_Fee", type number}, {"Outstanding_Balance", type number}, {"Status", type text}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

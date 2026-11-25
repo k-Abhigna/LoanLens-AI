@@ -111,8 +111,9 @@ A second document type: **loan repayment receipts** with EMI tables.
 3. **Evaluate** — `python evals/run_parse_eval.py` scores the parsed fields and EMI-table
    cells against ground truth, by lender layout and PDF vs scan.
 4. **Report** — `python scripts/export_powerbi.py` builds `data/powerbi/loans.csv` and
-   `emi_schedule.csv`; the DAX measures (Total Principal, Total EMI Collected, Total Late
-   Fees, Average Interest Rate, Late Payment %) are in [docs/powerbi_dax.md](docs/powerbi_dax.md).
+   `emi_schedule.csv`; `powerbi/LoanLens.pbip` is a ready Power BI project with the model,
+   the DAX measures (Total Principal, Total EMI Collected, Total Late Fees, Average Interest
+   Rate, Late Payment %) and a dashboard page. Steps: [docs/powerbi_dax.md](docs/powerbi_dax.md).
 
 | Receipt | Example |
 |---|---|
@@ -306,6 +307,7 @@ LoanLens-AI/
 │   ├── run_eval.py           # extraction, fraud and real-outcome evaluation
 │   ├── run_rag_eval.py       # Q&A retrieval, answers, guardrails, leakage (CI gate)
 │   └── harbor/               # Harbor tasks, verifier, LoanLens agent, results
+├── powerbi/                  # Power BI project (LoanLens.pbip): model, measures, dashboard
 ├── scripts/                  # Lending Club sampling, demo data, receipts, Power BI export
 ├── tests/                    # pytest suite (runs in CI)
 └── docs/                     # scope and architecture

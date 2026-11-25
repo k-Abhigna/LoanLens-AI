@@ -1,0 +1,176 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "loanTable",
+  "position": {
+    "x": 20,
+    "y": 460,
+    "z": 4000,
+    "height": 250,
+    "width": 1240,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Loans"
+                    }
+                  },
+                  "Property": "Loan_ID"
+                }
+              },
+              "queryRef": "Loans.Loan_ID",
+              "nativeQueryRef": "Loan_ID",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Loans"
+                    }
+                  },
+                  "Property": "Lender"
+                }
+              },
+              "queryRef": "Loans.Lender",
+              "nativeQueryRef": "Lender",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Loans"
+                    }
+                  },
+                  "Property": "Loan_Type"
+                }
+              },
+              "queryRef": "Loans.Loan_Type",
+              "nativeQueryRef": "Loan_Type",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Loans"
+                    }
+                  },
+                  "Property": "Borrower"
+                }
+              },
+              "queryRef": "Loans.Borrower",
+              "nativeQueryRef": "Borrower",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Loans"
+                    }
+                  },
+                  "Property": "Total Principal"
+                }
+              },
+              "queryRef": "Loans.Total Principal",
+              "nativeQueryRef": "Total Principal"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Loans"
+                    }
+                  },
+                  "Property": "Average Interest Rate"
+                }
+              },
+              "queryRef": "Loans.Average Interest Rate",
+              "nativeQueryRef": "Average Interest Rate"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Loans"
+                    }
+                  },
+                  "Property": "Total EMI Collected"
+                }
+              },
+              "queryRef": "Loans.Total EMI Collected",
+              "nativeQueryRef": "Total EMI Collected"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Loans"
+                    }
+                  },
+                  "Property": "Total Late Fees"
+                }
+              },
+              "queryRef": "Loans.Total Late Fees",
+              "nativeQueryRef": "Total Late Fees"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Loans"
+                    }
+                  },
+                  "Property": "Outstanding Principal"
+                }
+              },
+              "queryRef": "Loans.Outstanding Principal",
+              "nativeQueryRef": "Outstanding Principal"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Loans'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
